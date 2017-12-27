@@ -35,8 +35,9 @@ public class Player : MonoBehaviour {
     SoundSphere soundSphere;
     SphereCollider SoundCollider;
     itemSocket itemSocket;
-    
-    
+
+    Inventory inventory;
+
     ThirdPersonUserControl thirdPersonUserControl;
     FreeLookCam freeLookCam;
 
@@ -82,7 +83,9 @@ public class Player : MonoBehaviour {
         winObjectHeld = false;
         thirdPersonUserControl.notifyOnActionPressedObservers += ActionPressed;
         loseScreen = FindObjectOfType<LoseScreen>();
-        loseScreen.gameObject.SetActive(false);
+        inventory = GetComponent<Inventory>();
+
+        if (loseScreen) { loseScreen.gameObject.SetActive(false); }
 
     }
 
@@ -132,7 +135,13 @@ public class Player : MonoBehaviour {
             Debug.Log(Hit.transform.name);
             if (Hit.transform.GetComponent<Door>())
             {
-                Hit.transform.GetComponent<Door>().OpenCloseDoor();
+                foreach( Key key in inventory.keys)
+                {
+                    if (Hit.transform.GetComponent<Door>().OpenCloseDoor(key.KeyType))
+                    {
+                        break;
+                    }
+                }
             }
         }
     }

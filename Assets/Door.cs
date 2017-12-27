@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Door : MonoBehaviour {
 
+    public enum DoorType { Red, Blue, Green, Gold, General }
+    public DoorType ThisDoorType = DoorType.General;
+
     // Use this for initialization
     Animator d_Animator;
 	void Start () {
         d_Animator = GetComponent<Animator>();
     }
 
-    public void OpenCloseDoor()
+    public bool OpenCloseDoor(DoorType key)
     {
-        d_Animator.SetTrigger("Action");
+        if (ThisDoorType == DoorType.General)
+        {
+            d_Animator.SetTrigger("Action");
+            return true;
+        }
+        else if (key == ThisDoorType)
+        {
+            d_Animator.SetTrigger("Action");
+            return true;
+        }
+        return false;
     }
 	
 }
