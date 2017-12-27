@@ -97,11 +97,19 @@ public class Player : MonoBehaviour {
 
 
         //TODO need to only do this if rock is equiped or inventory
-        //Throw Rock
+
+
+
         if (Input.GetMouseButtonDown(1))
         {
             ThrowRock();
         }
+
+        if (Input.GetButtonDown("Action"))
+        {
+            CheckForDoor();
+        }
+
 
 
         // Check if player is vaulting window
@@ -114,6 +122,21 @@ public class Player : MonoBehaviour {
         AdjustSound();
 
     }
+
+    private void CheckForDoor()
+    {
+        RaycastHit Hit;
+        Ray DoorRay = new Ray(transform.position + Vector3.up, transform.forward);
+        if (Physics.Raycast(DoorRay, out Hit, 2f))
+        {
+            Debug.Log(Hit.transform.name);
+            if (Hit.transform.GetComponent<Door>())
+            {
+                Hit.transform.GetComponent<Door>().OpenCloseDoor();
+            }
+        }
+    }
+
 
     private void ChecktoVaultWindow()
     {
