@@ -102,7 +102,7 @@ public class Player : MonoBehaviour {
         //TODO need to only do this if rock is equiped or inventory
 
 
-
+        Debug.DrawLine(transform.position + Vector3.up * .5f, transform.position + Vector3.up * .5f + transform.forward * 2);
         if (Input.GetMouseButtonDown(1))
         {
             ThrowRock();
@@ -110,13 +110,8 @@ public class Player : MonoBehaviour {
 
         if (Input.GetButtonDown("Action"))
         {
-            CheckForDoor();
+            CheckForAction();
         }
-
-
-
-        // Check if player is vaulting window
-        ChecktoVaultWindow();
 
         //Deplete Stamina when running and recharge anytime else
         UpdateStamina();
@@ -126,16 +121,19 @@ public class Player : MonoBehaviour {
 
     }
 
-    private void CheckForDoor()
+    private void CheckForAction()
     {
         RaycastHit Hit;
-        Ray DoorRay = new Ray(transform.position + Vector3.up, transform.forward);
-        if (Physics.Raycast(DoorRay, out Hit, 2f))
+        Ray ActionRay = new Ray(transform.position + Vector3.up * .5f, transform.forward);
+        if (Physics.Raycast(ActionRay, out Hit, 2f))
         {
             Debug.Log(Hit.transform.name);
             if (Hit.transform.GetComponent<Door>())
             {
-                foreach( Key key in inventory.keys)
+                // Test if its a general door
+                Hit.transform.GetComponent<Door>().OpenCloseDoor(Door.DoorType.General);
+                // Then try all keys 
+                foreach ( Key key in inventory.keys)
                 {
                     if (Hit.transform.GetComponent<Door>().OpenCloseDoor(key.KeyType))
                     {
@@ -143,26 +141,31 @@ public class Player : MonoBehaviour {
                     }
                 }
             }
+            else if (Hit.transform.GetComponent<Chest>())
+            {
+                Hit.transform.GetComponent<Chest>().OpenChest(this);
+            }
+
         }
     }
 
 
-    private void ChecktoVaultWindow()
-    {
-        if (VaultAreaInside && PlayerAction)
-        {
-            Debug.Log("VaultAction!");
-            thirdPersonUserControl.MoveDisabled = true;
-            transform.position = windowStartPosition;
-            transform.LookAt(WindowTransform);
-            thirdPersonCharacter.VaultAction();
-        }
+    //private void ChecktoVaultWindow()
+    //{
+    //    if (VaultAreaInside && PlayerAction)
+    //    {
+    //        Debug.Log("VaultAction!");
+    //        thirdPersonUserControl.MoveDisabled = true;
+    //        transform.position = windowStartPosition;
+    //        transform.LookAt(WindowTransform);
+    //        thirdPersonCharacter.VaultAction();
+    //    }
 
-        else if (!VaultAreaInside)
-        {
-            thirdPersonUserControl.MoveDisabled = false;
-        }
-    }
+    //    else if (!VaultAreaInside)
+    //    {
+    //        thirdPersonUserControl.MoveDisabled = false;
+    //    }
+    //}
 
     private void ThrowRock()
     {
@@ -170,6 +173,7 @@ public class Player : MonoBehaviour {
         rock1.GetComponent<Rigidbody>().AddForce(transform.forward * BallLaunchForce + transform.up * BallUpForce);
     }
 
+    // Deplete the stamina when moving and recharge when not moving
     private void UpdateStamina()
     {
          if (thirdPersonUserControl.Running && !thirdPersonUserControl.crouch)
@@ -188,6 +192,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+    // Adjust sound according to speed
     private void AdjustSound()
     {
         if (m_rigidbody.velocity.magnitude != 0)

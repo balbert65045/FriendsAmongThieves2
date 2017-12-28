@@ -17,6 +17,7 @@ public class Door : MonoBehaviour {
     {
         if (ThisDoorType == DoorType.General)
         {
+            Debug.Log("Opening Door");
             d_Animator.SetTrigger("Action");
             return true;
         }
