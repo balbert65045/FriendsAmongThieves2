@@ -21,46 +21,48 @@ public class ObjectDirectionArrow : MonoBehaviour {
 	void Start () {
         itemObjective = FindObjectOfType<ItemObjective>();
         winArea = FindObjectOfType<WinArea>();
-        GoalObjLocation = itemObjective.transform.position;
+        if (itemObjective) { GoalObjLocation = itemObjective.transform.position; }
         player = FindObjectOfType<Player>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        Vector3 playerPos = player.transform.position;
 
-        // If the Win Object is held point towards Win zone
-        if (player.winObjectHeld)
+    // Update is called once per frame
+    void Update() {
+        if (itemObjective)
         {
-             if (!meshRenderer.enabled)
+            Vector3 playerPos = player.transform.position;
+
+            // If the Win Object is held point towards Win zone
+            if (player.winObjectHeld)
             {
-                meshRenderer.enabled = true;
-                winArea.ActiveWinMiniMap();
+                if (!meshRenderer.enabled)
+                {
+                    meshRenderer.enabled = true;
+                    winArea.ActiveWinMiniMap();
+                }
+                Vector3 DirectionVector = new Vector3(winArea.transform.position.x - playerPos.x, 0, winArea.transform.position.z - playerPos.z).normalized;
+                Debug.Log(DirectionVector);
+                transform.localPosition = new Vector3(DirectionVector.x * ArrowDistance, 10, DirectionVector.z * ArrowDistance);
+
+                transform.LookAt(winArea.transform.position);
+                transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+
             }
-            Vector3 DirectionVector = new Vector3(winArea.transform.position.x - playerPos.x, 0, winArea.transform.position.z - playerPos.z).normalized;
-            Debug.Log(DirectionVector);
-            transform.localPosition = new Vector3(DirectionVector.x * ArrowDistance, 10, DirectionVector.z * ArrowDistance);
-
-            transform.LookAt(winArea.transform.position);
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-
-        }
-        else
-        {
-
-            // Have the Arrow point towards the object to steal
-            if (new Vector3(GoalObjLocation.x - playerPos.x, 0, GoalObjLocation.z - playerPos.z).magnitude < CloseDistance)
+            else
             {
-                meshRenderer.enabled = false;
-            }
-            Vector3 DirectionVector = new Vector3(GoalObjLocation.x - playerPos.x, 0, GoalObjLocation.z - playerPos.z).normalized;
-            Debug.Log(DirectionVector);
-            transform.localPosition = new Vector3(DirectionVector.x * ArrowDistance, 10, DirectionVector.z * ArrowDistance);
 
-            transform.LookAt(GoalObjLocation);
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        }
-        
+                // Have the Arrow point towards the object to steal
+                if (new Vector3(GoalObjLocation.x - playerPos.x, 0, GoalObjLocation.z - playerPos.z).magnitude < CloseDistance)
+                {
+                    meshRenderer.enabled = false;
+                }
+                Vector3 DirectionVector = new Vector3(GoalObjLocation.x - playerPos.x, 0, GoalObjLocation.z - playerPos.z).normalized;
+                Debug.Log(DirectionVector);
+                transform.localPosition = new Vector3(DirectionVector.x * ArrowDistance, 10, DirectionVector.z * ArrowDistance);
+
+                transform.LookAt(GoalObjLocation);
+                transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            }
+        } 
     }
 }
