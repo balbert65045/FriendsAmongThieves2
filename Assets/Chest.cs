@@ -13,11 +13,13 @@ public class Chest : MonoBehaviour {
 	
 	public void OpenChest(Player playerOpening)
     {
+        ChestStorage ChestUI = FindObjectOfType<ChestStorage>();
         Inventory playerInventory = playerOpening.GetComponent<Inventory>();
         foreach (GameObject item in ItemsHeld)
         {
             playerInventory.AddItem(item);
         }
+        ChestUI.OpenChest(ItemsHeld);
         ItemsHeld.Clear();
     }
 }
