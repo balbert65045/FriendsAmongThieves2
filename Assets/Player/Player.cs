@@ -67,7 +67,10 @@ public class Player : MonoBehaviour {
 
     }
 
-
+    public void RelockCursor()
+    {
+        freeLookCam.LockCursor();
+    }
 
 
 
@@ -144,6 +147,7 @@ public class Player : MonoBehaviour {
             else if (Hit.transform.GetComponent<Chest>())
             {
                 Hit.transform.GetComponent<Chest>().OpenChest(this);
+                freeLookCam.UnlockCursor();
             }
 
         }

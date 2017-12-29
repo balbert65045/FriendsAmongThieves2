@@ -24,22 +24,24 @@ public class ChestStorage : MonoBehaviour {
 	void Update () {
 		if (ChestUI.activeSelf)
         {
-            if (Input.GetButtonDown("Cancel") || player.GetComponent<Rigidbody>().velocity.magnitude > .5f)
+            if (Input.GetButtonDown("Cancel") || player.GetComponent<Rigidbody>().velocity.magnitude > 1f)
             {
                 ChestUI.SetActive(false);
+                player.RelockCursor();
             }
         }
 	}
 
-    public void OpenChest(List<GameObject> items)
+    public void OpenChest(List<GameObject> items, Player player, Chest chest)
     {
         ChestUI.SetActive(true);
         int slotIndex = 0;
         foreach (GameObject item in items)
         {
+            Image image = null;
             if (item.GetComponent<Key>() != null)
             {
-                Image image = Instantiate(key, Slots[slotIndex]);
+                image = Instantiate(key, Slots[slotIndex]);
                 switch (item.GetComponent<Key>().KeyType)
                 {
                     case Door.DoorType.Blue:
@@ -59,9 +61,12 @@ public class ChestStorage : MonoBehaviour {
             }
             else if (item.GetComponent<rock>())
             {
-                Image image = Instantiate(rock, Slots[slotIndex]);
+                image = Instantiate(rock, Slots[slotIndex]);
                 image.color = Color.gray;
             }
+
+            if (image == null) { Debug.LogError("item has no component linked to it"); }
+            image.gameObject.GetComponent<Item>().SetPlayerChestandPlayer(player, chest, item);
 
             slotIndex++;
         }
