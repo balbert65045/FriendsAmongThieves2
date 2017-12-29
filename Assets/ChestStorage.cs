@@ -26,8 +26,16 @@ public class ChestStorage : MonoBehaviour {
         {
             if (Input.GetButtonDown("Cancel") || player.GetComponent<Rigidbody>().velocity.magnitude > 1f)
             {
+
                 ChestUI.SetActive(false);
                 player.RelockCursor();
+                foreach (Transform Slot in Slots)
+                {
+                    if (Slot.GetComponentInChildren<Item>() != null)
+                    {
+                        Destroy(Slot.GetComponentInChildren<Item>().gameObject);
+                    }
+                }
             }
         }
 	}
@@ -67,7 +75,6 @@ public class ChestStorage : MonoBehaviour {
 
             if (image == null) { Debug.LogError("item has no component linked to it"); }
             image.gameObject.GetComponent<Item>().SetPlayerChestandPlayer(player, chest, item);
-
             slotIndex++;
         }
     }
