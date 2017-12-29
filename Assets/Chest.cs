@@ -8,7 +8,7 @@ public class Chest : MonoBehaviour {
 	
 	public void OpenChest(Player playerOpening)
     {
-        ChestStorage ChestUI = FindObjectOfType<ChestStorage>();
+        ChestStorageUI ChestUI = FindObjectOfType<ChestStorageUI>();
         ChestUI.OpenChest(ItemsHeld, playerOpening, this);
     }
 }

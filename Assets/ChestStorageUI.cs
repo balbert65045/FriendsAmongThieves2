@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChestStorage : MonoBehaviour {
+public class ChestStorageUI : MonoBehaviour {
 
     // Use this for initialization
     public GameObject ChestUI;

@@ -7,7 +7,6 @@ public class Door : MonoBehaviour {
     public enum DoorType { Red, Blue, Green, Gold, General }
     public DoorType ThisDoorType = DoorType.General;
 
-    // Use this for initialization
     Animator d_Animator;
 	void Start () {
         d_Animator = GetComponent<Animator>();

@@ -41,7 +41,7 @@ public class ObjectDirectionArrow : MonoBehaviour {
                     winArea.ActiveWinMiniMap();
                 }
                 Vector3 DirectionVector = new Vector3(winArea.transform.position.x - playerPos.x, 0, winArea.transform.position.z - playerPos.z).normalized;
-                Debug.Log(DirectionVector);
+               // Debug.Log(DirectionVector);
                 transform.localPosition = new Vector3(DirectionVector.x * ArrowDistance, 10, DirectionVector.z * ArrowDistance);
 
                 transform.LookAt(winArea.transform.position);
@@ -57,7 +57,7 @@ public class ObjectDirectionArrow : MonoBehaviour {
                     meshRenderer.enabled = false;
                 }
                 Vector3 DirectionVector = new Vector3(GoalObjLocation.x - playerPos.x, 0, GoalObjLocation.z - playerPos.z).normalized;
-                Debug.Log(DirectionVector);
+               // Debug.Log(DirectionVector);
                 transform.localPosition = new Vector3(DirectionVector.x * ArrowDistance, 10, DirectionVector.z * ArrowDistance);
 
                 transform.LookAt(GoalObjLocation);

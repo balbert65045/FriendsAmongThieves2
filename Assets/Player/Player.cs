@@ -130,7 +130,6 @@ public class Player : MonoBehaviour {
         Ray ActionRay = new Ray(transform.position + Vector3.up * .5f, transform.forward);
         if (Physics.Raycast(ActionRay, out Hit, 2f))
         {
-            Debug.Log(Hit.transform.name);
             if (Hit.transform.GetComponent<Door>())
             {
                 // Test if its a general door
