@@ -17,7 +17,7 @@ public class Item : MonoBehaviour {
 
     public void Clicked()
     {
-        playerActive.GetComponent<Inventory>().AddItem(ObjectHeld);
+        playerActive.AddItem(ObjectHeld);
         chestActive.ItemsHeld.Remove(ObjectHeld);
         Destroy(this.gameObject);
     }

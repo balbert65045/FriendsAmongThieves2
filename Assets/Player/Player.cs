@@ -48,6 +48,7 @@ public class Player : MonoBehaviour {
     Transform WindowTransform;
 
     UsableItemsUI usableItemsUI;
+    UsableObject currentItemUsing = UsableObject.Rock;
 
     public void ObjectGrabbed()
     {
@@ -65,13 +66,18 @@ public class Player : MonoBehaviour {
         windowStartPosition = startPosition;
         WindowTransform = window;
         thirdPersonCharacter.VaultUpSpeed = speed;
-
-
     }
 
     public void RelockCursor()
     {
         freeLookCam.LockCursor();
+    }
+
+    public void AddItem(GameObject Item)
+    {
+        inventory.AddItem(Item);
+        int amount = inventory.QuantityCheck(currentItemUsing);
+        usableItemsUI.ShowNewQuantity(amount);
     }
 
 
@@ -116,7 +122,20 @@ public class Player : MonoBehaviour {
 
         if (Input.GetButtonDown("ChangeObject"))
         {
-            usableItemsUI.SwitchObject();
+            switch (currentItemUsing)
+            {
+                case UsableObject.Rock:
+                    currentItemUsing = UsableObject.SleepDart;
+                    break;
+                case UsableObject.SleepDart:
+                    currentItemUsing = UsableObject.SmokeBomb;
+                    break;
+                case UsableObject.SmokeBomb:
+                    currentItemUsing = UsableObject.Rock;
+                    break;
+            }
+            int amount = inventory.QuantityCheck(currentItemUsing);
+            usableItemsUI.SwitchObject(currentItemUsing, amount);
         }
 
         if (Input.GetButtonDown("Action"))

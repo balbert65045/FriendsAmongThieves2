@@ -6,8 +6,10 @@ public class Inventory : MonoBehaviour {
 
     // Use this for initialization
     public List<rock> Rocks;
-    //public int SleepDarts;
-    //public int SmokeBombs;
+    public List<SleepDart> SleepDarts;
+    public List<SmokeBomb> SmokeBombs; 
+
+
 
     public List<Key> keys;
 
@@ -29,6 +31,19 @@ public class Inventory : MonoBehaviour {
         GoldKeyHeld.SetActive(false);
     }
 	
+    public int QuantityCheck(UsableObject usableObject)
+    {
+        switch (usableObject)
+        {
+            case UsableObject.Rock:
+                return Rocks.Count;
+            case UsableObject.SleepDart:
+                return SleepDarts.Count;
+            case UsableObject.SmokeBomb:
+                return SmokeBombs.Count;
+        }
+        return 0;
+    }
 
     public void AddItem(GameObject Item)
     {

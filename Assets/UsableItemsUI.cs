@@ -9,22 +9,37 @@ public class UsableItemsUI : MonoBehaviour {
     public Sprite DartSprite;
     public Sprite SmokeBombSprite;
 
-    Sprite[] sprites;
-    int spriteIndex = 0;
 
     Image currentImage;
+    Text QuantityText;
 
 	// Use this for initialization
 	void Start () {
-        sprites = new Sprite[] { RockSprite, DartSprite, SmokeBombSprite };
-        currentImage = GetComponent<Image>();
-        currentImage.sprite = sprites[spriteIndex];
+        currentImage = GetComponentInChildren<Image>();
+        QuantityText = GetComponentInChildren<Text>();
+        currentImage.sprite = RockSprite;
     }
 	
-    public void SwitchObject()
+    public void SwitchObject(UsableObject useableObject, int amount)
     {
-        spriteIndex = (spriteIndex == sprites.Length -1) ? 0 : spriteIndex + 1;
-        currentImage.sprite = sprites[spriteIndex];
+        switch (useableObject)
+        {
+            case UsableObject.Rock:
+                currentImage.sprite = RockSprite;
+                break;
+            case UsableObject.SleepDart:
+                currentImage.sprite = DartSprite;
+                break;
+            case UsableObject.SmokeBomb:
+                currentImage.sprite = SmokeBombSprite;
+            break;
+        }
+        QuantityText.text = "x " + amount.ToString();
+    }
+
+    public void ShowNewQuantity(int amount)
+    {
+        QuantityText.text = "x " + amount.ToString();
     }
 
 	// Update is called once per frame
