@@ -43,7 +43,10 @@ public class Player : MonoBehaviour {
 
     ThirdPersonCharacter thirdPersonCharacter;
      
+    // Not needed at the moment
     public bool VaultAreaInside = false;
+
+
     Vector3 windowStartPosition;
     Transform WindowTransform;
 
@@ -56,22 +59,16 @@ public class Player : MonoBehaviour {
         notifyOnWinItemHelddObservers(winObjectHeld);
     }
 
-    public void DisableCam()
-    {
-        freeLookCam.enabled = false;
-    }
+    public void DisableCam(){freeLookCam.enabled = false;}
 
-    public void InVaultArea(Vector3 startPosition, Transform window, float speed)
-    {
-        windowStartPosition = startPosition;
-        WindowTransform = window;
-        thirdPersonCharacter.VaultUpSpeed = speed;
-    }
+    //public void InVaultArea(Vector3 startPosition, Transform window, float speed)
+    //{
+    //    windowStartPosition = startPosition;
+    //    WindowTransform = window;
+    //    thirdPersonCharacter.VaultUpSpeed = speed;
+    //}
 
-    public void RelockCursor()
-    {
-        freeLookCam.LockCursor();
-    }
+    public void RelockCursor(){ freeLookCam.LockCursor();}
 
     public void AddItem(GameObject Item)
     {
@@ -79,8 +76,6 @@ public class Player : MonoBehaviour {
         int amount = inventory.QuantityCheck(currentItemUsing);
         usableItemsUI.ShowNewQuantity(amount);
     }
-
-
 
     // Use this for initialization
     void Start () {
@@ -101,56 +96,64 @@ public class Player : MonoBehaviour {
 
     }
 
-    void ActionPressed(bool actionPressed)
-    {
-        PlayerAction = actionPressed;
-    }
+    void ActionPressed(bool actionPressed){PlayerAction = actionPressed;}
 
     // Update is called once per frame
     void Update ()
     {
+        //use object when right mouse button is clicked
+        if (Input.GetButtonDown("UseObject")){TryToUseObjectHolding();}
+        if (Input.GetButtonDown("ChangeObject")){ChangeObjectHolding();}
+        if (Input.GetButtonDown("Action")){ CheckForAction();}
+        //Deplete Stamina when running and recharge anytime else
+        UpdateStamina();
+        //Adjust the sound made by your speed
+        AdjustSound();
+    }
 
-
-        //TODO need to only do this if rock is equiped or inventory
-
-
-        Debug.DrawLine(transform.position + Vector3.up * .5f, transform.position + Vector3.up * .5f + transform.forward * 2);
-        if (Input.GetMouseButtonDown(1))
-        {
-            ThrowRock();
-        }
-
-        if (Input.GetButtonDown("ChangeObject"))
+    // uses the current active object 
+    private void TryToUseObjectHolding()
+    {
+        if (inventory.QuantityCheck(currentItemUsing) > 0)
         {
             switch (currentItemUsing)
             {
                 case UsableObject.Rock:
-                    currentItemUsing = UsableObject.SleepDart;
+                    ThrowRock();
                     break;
                 case UsableObject.SleepDart:
-                    currentItemUsing = UsableObject.SmokeBomb;
+                 
                     break;
                 case UsableObject.SmokeBomb:
-                    currentItemUsing = UsableObject.Rock;
+
                     break;
             }
+            inventory.LoseItem(currentItemUsing);
             int amount = inventory.QuantityCheck(currentItemUsing);
-            usableItemsUI.SwitchObject(currentItemUsing, amount);
+            usableItemsUI.ShowNewQuantity(amount);
         }
-
-        if (Input.GetButtonDown("Action"))
-        {
-            CheckForAction();
-        }
-
-        //Deplete Stamina when running and recharge anytime else
-        UpdateStamina();
-
-        //Adjust the sound made by your speed
-        AdjustSound();
-
     }
 
+    // Changes between rock, sleep dart, and smoke bomb using
+    private void ChangeObjectHolding()
+    {
+        switch (currentItemUsing)
+        {
+            case UsableObject.Rock:
+                currentItemUsing = UsableObject.SleepDart;
+                break;
+            case UsableObject.SleepDart:
+                currentItemUsing = UsableObject.SmokeBomb;
+                break;
+            case UsableObject.SmokeBomb:
+                currentItemUsing = UsableObject.Rock;
+                break;
+        }
+        int amount = inventory.QuantityCheck(currentItemUsing);
+        usableItemsUI.SwitchObject(currentItemUsing, amount);
+    }
+
+    // Looks to Open Door or Open Chest
     private void CheckForAction()
     {
         RaycastHit Hit;
@@ -179,7 +182,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-
+    /// <summary>
     //private void ChecktoVaultWindow()
     //{
     //    if (VaultAreaInside && PlayerAction)
@@ -196,7 +199,10 @@ public class Player : MonoBehaviour {
     //        thirdPersonUserControl.MoveDisabled = false;
     //    }
     //}
+    /// </summary>
 
+    // Launches the rock from above head 
+    //TODO make this an ability to be able to aim
     private void ThrowRock()
     {
         GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
@@ -235,6 +241,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //TODO take damage and fall when die 
     private void OnTriggerEnter(Collider other)
     {
         //Caught/ Dead

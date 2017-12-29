@@ -73,4 +73,20 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    public void LoseItem(UsableObject usableObject)
+    {
+        switch (usableObject)
+        {
+            case UsableObject.Rock:
+                Rocks.Remove(Rocks[Rocks.Count - 1]);
+                break;
+            case UsableObject.SleepDart:
+
+                break;
+            case UsableObject.SmokeBomb:
+              
+                break;
+        }
+    }
+
 }

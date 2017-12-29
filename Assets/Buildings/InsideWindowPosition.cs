@@ -21,7 +21,7 @@ public class InsideWindowPosition : MonoBehaviour {
         {
             // 1 is Inside;
             other.gameObject.GetComponent<Player>().VaultAreaInside = true;
-            other.gameObject.GetComponent<Player>().InVaultArea(this.transform.position, transform.parent, SpeedtoVault);
+          //  other.gameObject.GetComponent<Player>().InVaultArea(this.transform.position, transform.parent, SpeedtoVault);
         }
     }
 

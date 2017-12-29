@@ -23,7 +23,7 @@ public class OutideWindowPosition : MonoBehaviour {
             //window.playerUsingWindow(2, other.gameObject);
             Debug.Log("In Window Position");
             other.gameObject.GetComponent<Player>().VaultAreaInside = true;
-            other.gameObject.GetComponent<Player>().InVaultArea(this.transform.position, transform.parent, SpeedtoVault);
+           // other.gameObject.GetComponent<Player>().InVaultArea(this.transform.position, transform.parent, SpeedtoVault);
         }
     }
 
