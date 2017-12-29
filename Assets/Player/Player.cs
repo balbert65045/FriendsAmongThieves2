@@ -47,6 +47,8 @@ public class Player : MonoBehaviour {
     Vector3 windowStartPosition;
     Transform WindowTransform;
 
+    UsableItemsUI usableItemsUI;
+
     public void ObjectGrabbed()
     {
         winObjectHeld = true;
@@ -87,6 +89,7 @@ public class Player : MonoBehaviour {
         thirdPersonUserControl.notifyOnActionPressedObservers += ActionPressed;
         loseScreen = FindObjectOfType<LoseScreen>();
         inventory = GetComponent<Inventory>();
+        usableItemsUI = FindObjectOfType<UsableItemsUI>();
 
         if (loseScreen) { loseScreen.gameObject.SetActive(false); }
 
@@ -109,6 +112,11 @@ public class Player : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
         {
             ThrowRock();
+        }
+
+        if (Input.GetButtonDown("ChangeObject"))
+        {
+            usableItemsUI.SwitchObject();
         }
 
         if (Input.GetButtonDown("Action"))
