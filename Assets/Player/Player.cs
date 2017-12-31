@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 
 
     public GameObject rock;
+    public GameObject SleepDart;
 
     [SerializeField]
     float StaminaDecreaseRate = 2f;
@@ -16,10 +17,17 @@ public class Player : MonoBehaviour {
     float StaminaRechargeRate = 2f;
     [SerializeField]
     float RunPercentLimit = 20;
+
     [SerializeField]
     float BallLaunchForce = 500;
     [SerializeField]
     float BallUpForce = 200;
+    [SerializeField]
+    float DartLaunchForce = 500;
+    [SerializeField]
+    float DartUpForce = 200;
+
+
 
     public float CurrentStamina = 100f;
 
@@ -52,6 +60,7 @@ public class Player : MonoBehaviour {
 
     UsableItemsUI usableItemsUI;
     UsableObject currentItemUsing = UsableObject.Rock;
+
 
     public void ObjectGrabbed()
     {
@@ -101,10 +110,14 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        //use object when right mouse button is clicked
-        if (Input.GetButtonDown("UseObject")){TryToUseObjectHolding();}
-        if (Input.GetButtonDown("ChangeObject")){ChangeObjectHolding();}
-        if (Input.GetButtonDown("Action")){ CheckForAction();}
+            //use object when right mouse button is clicked
+            if (Input.GetButtonDown("UseObject")) { TryToUseObjectHolding(); }
+            if (Input.GetButtonDown("ChangeObject")) { ChangeObjectHolding(); }
+            if (Input.GetButtonDown("Action")) { CheckForAction(); }
+            //if (Input.GetButtonDown("Zoom")) { freeLookCam.GetComponent<ProtectCameraFromWallClip>().ZoomIn(); }
+            //else if (Input.GetButtonUp("Zoom")) { freeLookCam.GetComponent<ProtectCameraFromWallClip>().ZoomkOut(); }
+        
+
         //Deplete Stamina when running and recharge anytime else
         UpdateStamina();
         //Adjust the sound made by your speed
@@ -122,7 +135,7 @@ public class Player : MonoBehaviour {
                     ThrowRock();
                     break;
                 case UsableObject.SleepDart:
-                 
+                    ThrowDart();
                     break;
                 case UsableObject.SmokeBomb:
 
@@ -207,6 +220,12 @@ public class Player : MonoBehaviour {
     {
         GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
         rock1.GetComponent<Rigidbody>().AddForce(transform.forward * BallLaunchForce + transform.up * BallUpForce);
+    }
+
+    private void ThrowDart()
+    {
+        GameObject MySleepDart = Instantiate(SleepDart, itemSocket.transform.position, transform.rotation);
+        MySleepDart.GetComponent<Rigidbody>().AddForce(transform.forward * DartLaunchForce + transform.up * DartUpForce);
     }
 
     // Deplete the stamina when moving and recharge when not moving

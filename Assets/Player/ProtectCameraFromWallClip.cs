@@ -26,7 +26,7 @@ namespace UnityStandardAssets.Cameras
         private RaycastHit[] m_Hits;              // the hits between the camera and the target
         private RayHitComparer m_RayHitComparer;  // variable to compare raycast hit distances
 
-
+        float targetDist;
 
 
         private void Start()
@@ -39,23 +39,25 @@ namespace UnityStandardAssets.Cameras
 
             // create a new RayHitComparer
             m_RayHitComparer = new RayHitComparer();
+            targetDist = m_OriginalDist;
         }
 
-        public void ZoomIn()
-        {
-            m_CurrentDist = m_CurrentDist - ZoominDistance;
-        }
+        //public void ZoomIn()
+        //{
+        //    targetDist = targetDist - ZoominDistance;
+        //}
 
-        public void ZoomkOut()
-        {
-            m_CurrentDist = m_OriginalDist;
-        }
+        //public void ZoomkOut()
+        //{
+        //    targetDist = m_OriginalDist;
+        //}
 
 
         private void LateUpdate()
         {
             // initially set the target distance
-            float targetDist = m_OriginalDist;
+            //float targetDist = m_OriginalDist;
+            targetDist = m_OriginalDist;
 
             m_Ray.origin = m_Pivot.position + m_Pivot.forward*sphereCastRadius;
             m_Ray.direction = -m_Pivot.forward;

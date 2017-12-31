@@ -35,11 +35,24 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         bool DisableGroundCheck = false;
         Vector3 VaultUpPosition;
 
-        public void VaultAction()
+
+
+        public bool Sleeping = false;
+        float SleepStartTime;
+        float SleepTime = 0;
+
+        public void SetSleep(float TimeSleep)
         {
-            vault = true;
-            DisableGroundCheck = true;
+            SleepStartTime = Time.time;
+            SleepTime = TimeSleep;
+            Sleeping = true;
         }
+
+        //public void VaultAction()
+        //{
+        //    vault = true;
+        //    DisableGroundCheck = true;
+        //}
 
 
         public void ShrinkCapsuleCollider()
@@ -92,33 +105,43 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public void Move(Vector3 move, bool crouch, bool jump)
 		{
 
-			// convert the world relative moveInput vector into a local-relative
-			// turn amount and forward amount required to head in the desired
-			// direction.
-			if (move.magnitude > 1f) move.Normalize();
-			move = transform.InverseTransformDirection(move);
-            CheckGroundStatus(); 
-			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-			m_TurnAmount = Mathf.Atan2(move.x, move.z);
-			m_ForwardAmount = move.z;
+            if (Sleeping)
+            {
+                if (SleepStartTime + SleepTime < Time.time)
+                {
+                    Sleeping = false;
+                }
+            }
+            else
+            {
+                // convert the world relative moveInput vector into a local-relative
+                // turn amount and forward amount required to head in the desired
+                // direction.
+                if (move.magnitude > 1f) move.Normalize();
+                move = transform.InverseTransformDirection(move);
+                CheckGroundStatus();
+                move = Vector3.ProjectOnPlane(move, m_GroundNormal);
+                m_TurnAmount = Mathf.Atan2(move.x, move.z);
+                m_ForwardAmount = move.z;
 
-			ApplyExtraTurnRotation();
+                ApplyExtraTurnRotation();
 
-			// control and velocity handling is different when grounded and airborne:
-			if (m_IsGrounded)
-			{
-				HandleGroundedMovement(crouch, jump);
-			}
-			else
-			{
-				HandleAirborneMovement();
-			}
+                // control and velocity handling is different when grounded and airborne:
+                if (m_IsGrounded)
+                {
+                    HandleGroundedMovement(crouch, jump);
+                }
+                else
+                {
+                    HandleAirborneMovement();
+                }
 
-			ScaleCapsuleForCrouching(crouch);
-			PreventStandingInLowHeadroom();
+                ScaleCapsuleForCrouching(crouch);
+                PreventStandingInLowHeadroom();
 
-			// send input and other state parameters to the animator
-			UpdateAnimator(move);
+                // send input and other state parameters to the animator
+                UpdateAnimator(move);
+            }
 		}
 
 
