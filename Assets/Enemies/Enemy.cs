@@ -14,11 +14,12 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     bool StationaryGuard = false;
 
-    public enum EnemyStates { Patrol, Chase, InvestigateNoise, InvestigateSeight }
+    public enum EnemyStates { Patrol, Chase, InvestigateNoise, InvestigateSeight, Sleeping }
     public EnemyStates CurrentState = EnemyStates.Patrol;
     public VisionController visionController;
     public WaypointSystem waypointSystem;
-    public float RemainingDistance { get; private set;}
+    public float RemainingDistance;
+    //public float RemainingDistance { get; private set;}
 
     AICharacterControl aICharacterControl;
     Player player;
@@ -26,20 +27,27 @@ public class Enemy : MonoBehaviour {
 
     Vector3 BeginingLookArea;
     GameObject LookPoint;
- 
+    
+   
 
 
     public void StatusChange(EnemyStates enemyState, Transform Location)
     {
       
         CurrentState = enemyState;
-        if (CurrentState == EnemyStates.Chase)
+        if (CurrentState == EnemyStates.Sleeping)
+        {
+            aICharacterControl.agent.speed = 0;
+            aICharacterControl.agent.isStopped = true;
+        }
+        else if (CurrentState == EnemyStates.Chase)
         {
             aICharacterControl.agent.speed = RunSpeed;
             aICharacterControl.SetTarget(player.transform);
         }
         else if (CurrentState == EnemyStates.Patrol)
         {
+            aICharacterControl.agent.isStopped = false;
             aICharacterControl.agent.speed = WalkSpeed;
             aICharacterControl.SetTarget(waypointSystem.ActiveWaypoint);
         }
@@ -78,6 +86,7 @@ public class Enemy : MonoBehaviour {
 
     private void Update()
     {
+
         if (CurrentState == EnemyStates.InvestigateSeight || CurrentState == EnemyStates.InvestigateNoise)
         {
             RemainingDistance = (PositionMovingTo - transform.position).magnitude;

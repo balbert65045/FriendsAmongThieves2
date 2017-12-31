@@ -261,16 +261,16 @@ public class Player : MonoBehaviour {
     }
 
     //TODO take damage and fall when die 
-    private void OnTriggerEnter(Collider other)
-    {
-        //Caught/ Dead
-        if (other.GetComponent<EnemyAttackSphere>())
-        {
-            loseScreen.gameObject.SetActive(true);
-            DisableCam();
-            Time.timeScale = 0;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //Caught/ Dead
+    //    if (other.GetComponent<EnemyAttackSphere>())
+    //    {
+    //        loseScreen.gameObject.SetActive(true);
+    //        DisableCam();
+    //        Time.timeScale = 0;
+    //    }
+    //}
 
 
 

@@ -39,13 +39,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         public bool Sleeping = false;
         float SleepStartTime;
-        float SleepTime = 0;
+        float SleepTime = 10f;
 
         public void SetSleep(float TimeSleep)
         {
             SleepStartTime = Time.time;
             SleepTime = TimeSleep;
             Sleeping = true;
+            if (GetComponent<Enemy>())
+            {
+                GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Sleeping, this.transform);
+            }
         }
 
         //public void VaultAction()
@@ -107,9 +111,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             if (Sleeping)
             {
+                m_TurnAmount = 0;
+                m_ForwardAmount = 0;
+                UpdateAnimator(Vector3.zero);
                 if (SleepStartTime + SleepTime < Time.time)
                 {
                     Sleeping = false;
+                    if (GetComponent<Enemy>())
+                    {
+                        GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Patrol, this.transform);
+                    }
                 }
             }
             else
