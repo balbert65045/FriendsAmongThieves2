@@ -141,7 +141,7 @@ public class Player : MonoBehaviour {
 
                     break;
             }
-            inventory.LoseItem(currentItemUsing);
+            //inventory.LoseItem(currentItemUsing);
             int amount = inventory.QuantityCheck(currentItemUsing);
             usableItemsUI.ShowNewQuantity(amount);
         }
@@ -218,14 +218,20 @@ public class Player : MonoBehaviour {
     //TODO make this an ability to be able to aim
     private void ThrowRock()
     {
+        Ray AimRay = FindObjectOfType<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
+        Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
-        rock1.GetComponent<Rigidbody>().AddForce(transform.forward * BallLaunchForce + transform.up * BallUpForce);
+        rock1.GetComponent<Rigidbody>().AddForce(AimRay.direction * BallLaunchForce);
     }
 
     private void ThrowDart()
     {
+        Ray AimRay = FindObjectOfType<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
+        Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         GameObject MySleepDart = Instantiate(SleepDart, itemSocket.transform.position, transform.rotation);
-        MySleepDart.GetComponent<Rigidbody>().AddForce(transform.forward * DartLaunchForce + transform.up * DartUpForce);
+        MySleepDart.GetComponent<Rigidbody>().AddForce(AimRay.direction * DartLaunchForce);
     }
 
     // Deplete the stamina when moving and recharge when not moving
