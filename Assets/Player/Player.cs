@@ -20,12 +20,12 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     float BallLaunchForce = 500;
-    [SerializeField]
-    float BallUpForce = 200;
+    //[SerializeField]
+    //float BallUpForce = 200;
     [SerializeField]
     float DartLaunchForce = 500;
-    [SerializeField]
-    float DartUpForce = 200;
+    //[SerializeField]
+    //float DartUpForce = 200;
 
 
 
@@ -141,7 +141,7 @@ public class Player : MonoBehaviour {
 
                     break;
             }
-            //inventory.LoseItem(currentItemUsing);
+            inventory.LoseItem(currentItemUsing);
             int amount = inventory.QuantityCheck(currentItemUsing);
             usableItemsUI.ShowNewQuantity(amount);
         }

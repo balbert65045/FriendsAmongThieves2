@@ -71,6 +71,14 @@ public class Inventory : MonoBehaviour {
         {
             Rocks.Add(Item.GetComponent<rock>());
         }
+        else if (Item.GetComponent<SleepDart>())
+        {
+            SleepDarts.Add(Item.GetComponent<SleepDart>());
+        }
+        else if (Item.GetComponent<SmokeBomb>())
+        {
+            SmokeBombs.Add(Item.GetComponent<SmokeBomb>());
+        }
     }
 
     public void LoseItem(UsableObject usableObject)
@@ -81,10 +89,10 @@ public class Inventory : MonoBehaviour {
                 Rocks.Remove(Rocks[Rocks.Count - 1]);
                 break;
             case UsableObject.SleepDart:
-
+                SleepDarts.Remove(SleepDarts[SleepDarts.Count - 1]);
                 break;
             case UsableObject.SmokeBomb:
-              
+                SmokeBombs.Remove(SmokeBombs[SmokeBombs.Count - 1]);
                 break;
         }
     }

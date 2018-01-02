@@ -10,6 +10,8 @@ public class ChestStorageUI : MonoBehaviour {
 
     public Image key;
     public Image rock;
+    public Image SleepDart;
+    public Image SmokeBomb;
 
     public Transform[] Slots;
 
@@ -72,6 +74,15 @@ public class ChestStorageUI : MonoBehaviour {
                 image = Instantiate(rock, Slots[slotIndex]);
                 image.color = Color.gray;
             }
+            else if (item.GetComponent<SleepDart>())
+            {
+                image = Instantiate(SleepDart, Slots[slotIndex]);
+            }
+            else if (item.GetComponent<SmokeBomb>())
+            {
+                image = Instantiate(SmokeBomb, Slots[slotIndex]);
+            }
+
 
             if (image == null) { Debug.LogError("item has no component linked to it"); }
             image.gameObject.GetComponent<Item>().SetPlayerChestandPlayer(player, chest, item);
