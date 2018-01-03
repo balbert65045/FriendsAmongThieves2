@@ -1,24 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class SoundSphere : MonoBehaviour {
 
-    // Use this for initialization
-    [SerializeField]
+
     bool PlayerAttached;
-    Player player;
+    Transform Target; 
 
-	void Start () {
-        player = FindObjectOfType<Player>();
-
+    public void SetTarget(Transform newTarget)
+    {
+        Target = newTarget;
+        PlayerAttached = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (PlayerAttached)
         {
-            transform.position = player.transform.position;
+            transform.position = Target.position;
         }
 
     }

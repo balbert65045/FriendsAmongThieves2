@@ -5,7 +5,9 @@ using UnityStandardAssets.Characters.ThirdPerson;
 using UnityStandardAssets.Cameras;
 using System;
 
-public class Player : MonoBehaviour {
+using UnityEngine.Networking;
+
+public class Player : NetworkBehaviour {
 
 
     public GameObject rock;
@@ -86,6 +88,7 @@ public class Player : MonoBehaviour {
         usableItemsUI.ShowNewQuantity(amount);
     }
 
+
     // Use this for initialization
     void Start () {
         freeLookCam = FindObjectOfType<FreeLookCam>();
@@ -110,6 +113,7 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if (!isLocalPlayer) { return; }
             //use object when right mouse button is clicked
             if (Input.GetButtonDown("UseObject")) { TryToUseObjectHolding(); }
             if (Input.GetButtonDown("ChangeObject")) { ChangeObjectHolding(); }

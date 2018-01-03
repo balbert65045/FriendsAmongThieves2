@@ -13,23 +13,35 @@ public class Inventory : MonoBehaviour {
 
     public List<Key> keys;
 
-    [SerializeField]
+
     GameObject BlueKeyHeld;
-    [SerializeField]
     GameObject RedKeyHeld;
-    [SerializeField]
     GameObject GreenKeyHeld;
-    [SerializeField]
     GameObject GoldKeyHeld;
 
-   
-
-    void Start () {
-        BlueKeyHeld.SetActive(false);
-        RedKeyHeld.SetActive(false);
-        GreenKeyHeld.SetActive(false);
-        GoldKeyHeld.SetActive(false);
+   public void LinkKey(KeyImage key)
+    {
+        switch (key.KeyType)
+        {
+            case Door.DoorType.Blue:
+                BlueKeyHeld = key.gameObject;
+                BlueKeyHeld.SetActive(false);
+                break;
+            case Door.DoorType.Red:
+                RedKeyHeld = key.gameObject;
+                RedKeyHeld.SetActive(false);
+                break;
+            case Door.DoorType.Green:
+                GreenKeyHeld = key.gameObject;
+                GreenKeyHeld.SetActive(false);
+                break;
+            case Door.DoorType.Gold:
+                GoldKeyHeld = key.gameObject;
+                GoldKeyHeld.SetActive(false);
+                break;
+        }
     }
+
 	
     public int QuantityCheck(UsableObject usableObject)
     {

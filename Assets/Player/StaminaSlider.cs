@@ -9,14 +9,19 @@ public class StaminaSlider : MonoBehaviour {
     Slider slider;
     Player player; 
 	void Start () {
-        player = FindObjectOfType<Player>();
         slider = GetComponent<Slider>();
+    }
 
+    public void SetPlayer(Player MyPlayer)
+    {
+        player = MyPlayer;
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        slider.value = player.CurrentStamina;
+        if (player != null)
+        {
+            slider.value = player.CurrentStamina;
+        }
     }
 }

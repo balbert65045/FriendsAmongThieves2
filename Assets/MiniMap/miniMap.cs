@@ -6,13 +6,17 @@ public class miniMap : MonoBehaviour {
 
     // Use this for initialization
     Player player;
-	void Start () {
-        player = FindObjectOfType<Player>();
 
+    public void SetPlayer(Player MyPlayer)
+    {
+        player = MyPlayer;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+
+    // Update is called once per frame
+    void Update () {
+        if (player != null)
+        {
+            transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        }
 	}
 }

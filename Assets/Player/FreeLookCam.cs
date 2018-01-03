@@ -23,6 +23,7 @@ namespace UnityStandardAssets.Cameras
         [SerializeField]
         float ShoulderOffset = 1f;
 
+      
 
         private float m_LookAngle;                    // The rig's y axis rotation.
         private float m_TiltAngle;                    // The pivot's x axis rotation.
@@ -57,6 +58,8 @@ namespace UnityStandardAssets.Cameras
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = !m_LockCursor;
         }
+
+
 
         protected void Update()
         {
