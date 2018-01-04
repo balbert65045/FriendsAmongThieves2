@@ -15,7 +15,10 @@ public class VisionController : MonoBehaviour {
 
     Transform PlayerLocationLastSeen;
     public Transform PlayerLastSeen { get { return PlayerLocationLastSeen; } }
-    
+
+    Player PlayerChasing;
+    public void SetPlayerChasing(Player newPlayerChasing){PlayerChasing = newPlayerChasing;}
+
     public void UpdatePlayerLocationLastSeen(Transform location)
     {
         PlayerLocationLastSeen = location;
@@ -43,7 +46,7 @@ public class VisionController : MonoBehaviour {
                 Debug.LogWarning("Unknown State recieved by vision controller");
                 return;
         }
-        enemy.StatusChange(State, PlayerLocationLastSeen);
+        enemy.StatusChange(State, PlayerLocationLastSeen, PlayerChasing);
     }
 
     void Start()

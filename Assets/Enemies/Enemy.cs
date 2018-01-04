@@ -22,7 +22,6 @@ public class Enemy : MonoBehaviour {
     //public float RemainingDistance { get; private set;}
 
     AICharacterControl aICharacterControl;
-    Player player;
     Vector3 PositionMovingTo;
 
     Vector3 BeginingLookArea;
@@ -31,7 +30,7 @@ public class Enemy : MonoBehaviour {
    
 
 
-    public void StatusChange(EnemyStates enemyState, Transform Location)
+    public void StatusChange(EnemyStates enemyState, Transform Location, Player playerChasing)
     {
       
         CurrentState = enemyState;
@@ -43,7 +42,7 @@ public class Enemy : MonoBehaviour {
         else if (CurrentState == EnemyStates.Chase)
         {
             aICharacterControl.agent.speed = RunSpeed;
-            aICharacterControl.SetTarget(player.transform);
+            aICharacterControl.SetTarget(playerChasing.transform);
         }
         else if (CurrentState == EnemyStates.Patrol)
         {
@@ -72,7 +71,6 @@ public class Enemy : MonoBehaviour {
    
         aICharacterControl = GetComponent<AICharacterControl>();
         aICharacterControl.SetTarget(waypointSystem.ActiveWaypoint);
-        player = FindObjectOfType<Player>();
         aICharacterControl.agent.speed = WalkSpeed;
         if (StationaryGuard)
         {

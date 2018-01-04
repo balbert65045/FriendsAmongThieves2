@@ -48,7 +48,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             Sleeping = true;
             if (GetComponent<Enemy>())
             {
-                GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Sleeping, this.transform);
+                GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Sleeping, this.transform, null);
             }
         }
 
@@ -119,7 +119,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                     Sleeping = false;
                     if (GetComponent<Enemy>())
                     {
-                        GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Patrol, this.transform);
+                        GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Patrol, this.transform, null);
                     }
                 }
             }

@@ -29,7 +29,7 @@ public class EnemyEars : MonoBehaviour {
             //Debug.Log(enemy.RemainingDistance);
             if (enemy.RemainingDistance <= DistanceTolerance)
             {
-                enemy.StatusChange(Enemy.EnemyStates.Patrol, null);
+                enemy.StatusChange(Enemy.EnemyStates.Patrol, null, null);
             }
         }
     }
@@ -51,7 +51,7 @@ public class EnemyEars : MonoBehaviour {
                 PlayerHeardLocation.transform.position = new Vector3(LocationtoMove.x, CurrentHeight, LocationtoMove.z);
                 CurrentHeardPosition = PlayerHeardLocation.transform.position;
 
-                enemy.StatusChange(Enemy.EnemyStates.InvestigateNoise, PlayerHeardLocation.transform);
+                enemy.StatusChange(Enemy.EnemyStates.InvestigateNoise, PlayerHeardLocation.transform, null);
                 //Debug.Log("Should Change Status");
             }
             else if (enemy.CurrentState == Enemy.EnemyStates.InvestigateNoise || enemy.CurrentState == Enemy.EnemyStates.InvestigateSeight)
@@ -64,7 +64,7 @@ public class EnemyEars : MonoBehaviour {
                 PlayerHeardLocation.transform.position = new Vector3(LocationtoMove.x, CurrentHeight, LocationtoMove.z);
                 CurrentHeardPosition = PlayerHeardLocation.transform.position;
 
-                enemy.StatusChange(Enemy.EnemyStates.InvestigateNoise, PlayerHeardLocation.transform);
+                enemy.StatusChange(Enemy.EnemyStates.InvestigateNoise, PlayerHeardLocation.transform, null);
             }
         }
     }

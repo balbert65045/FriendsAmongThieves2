@@ -76,6 +76,7 @@ public class EnemySight : MonoBehaviour {
             else
             {
                 visionController.StateChange(Enemy.EnemyStates.Chase);
+                visionController.SetPlayerChasing(player);
             }
         }
 
@@ -97,17 +98,18 @@ public class EnemySight : MonoBehaviour {
         else if (enemyState == Enemy.EnemyStates.InvestigateSeight || enemyState == Enemy.EnemyStates.InvestigateNoise)
         {
             Debug.Log("Investigating");
-                if ((hastHit) && (hasHit2))
-                {
-                    //Debug.Log(hit1.transform.gameObject.name);
-                    //Debug.Log(hit2.transform.gameObject.name);
-                    //Debug.Log("Player Hidden. Player Hidding behind " + hit1.transform.name + hit2.transform.name);
-                }
-                else
-                {
-                    visionController.StateChange(Enemy.EnemyStates.Chase);
-                }
+            if ((hastHit) && (hasHit2))
+            {
+                //Debug.Log(hit1.transform.gameObject.name);
+                //Debug.Log(hit2.transform.gameObject.name);
+                //Debug.Log("Player Hidden. Player Hidding behind " + hit1.transform.name + hit2.transform.name);
             }
+            else
+            {
+                visionController.StateChange(Enemy.EnemyStates.Chase);
+                visionController.SetPlayerChasing(player);
+            }
+        }
       }
 
 
