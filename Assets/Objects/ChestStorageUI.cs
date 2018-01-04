@@ -19,7 +19,6 @@ public class ChestStorageUI : MonoBehaviour {
 
 	void Start () {
         ChestUI.SetActive(false);
-        player = FindObjectOfType<Player>();
     }
 	
 	// Update is called once per frame
@@ -42,10 +41,11 @@ public class ChestStorageUI : MonoBehaviour {
         }
 	}
 
-    public void OpenChest(List<GameObject> items, Player player, Chest chest)
+    public void OpenChest(List<GameObject> items, Player newPlayer, Chest chest)
     {
         ChestUI.SetActive(true);
         int slotIndex = 0;
+        player = newPlayer;
         foreach (GameObject item in items)
         {
             Image image = null;

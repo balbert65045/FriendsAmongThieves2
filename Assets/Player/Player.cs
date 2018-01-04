@@ -222,7 +222,8 @@ public class Player : NetworkBehaviour {
     //TODO make this an ability to be able to aim
     private void ThrowRock()
     {
-        Ray AimRay = FindObjectOfType<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
+        FreeLookCam rig = FindObjectOfType<FreeLookCam>();
+        Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
@@ -231,7 +232,8 @@ public class Player : NetworkBehaviour {
 
     private void ThrowDart()
     {
-        Ray AimRay = FindObjectOfType<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
+        FreeLookCam rig = FindObjectOfType<FreeLookCam>();
+        Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         GameObject MySleepDart = Instantiate(SleepDart, itemSocket.transform.position, transform.rotation);
