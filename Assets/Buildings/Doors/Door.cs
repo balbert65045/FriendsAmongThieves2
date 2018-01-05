@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Door : MonoBehaviour {
 
@@ -8,8 +9,11 @@ public class Door : MonoBehaviour {
     public DoorType ThisDoorType = DoorType.General;
 
     Animator d_Animator;
+    NetworkAnimator networkAnimator;
+
 	void Start () {
         d_Animator = GetComponent<Animator>();
+        networkAnimator = GetComponent<NetworkAnimator>();
     }
 
     public bool OpenCloseDoor(DoorType key)
@@ -17,12 +21,12 @@ public class Door : MonoBehaviour {
         if (ThisDoorType == DoorType.General)
         {
             Debug.Log("Opening Door");
-            d_Animator.SetTrigger("Action");
+            networkAnimator.SetTrigger("Action");
             return true;
         }
         else if (key == ThisDoorType)
         {
-            d_Animator.SetTrigger("Action");
+            networkAnimator.SetTrigger("Action");
             return true;
         }
         return false;
