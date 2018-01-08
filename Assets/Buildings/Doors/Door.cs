@@ -11,6 +11,9 @@ public class Door : MonoBehaviour {
     Animator d_Animator;
     NetworkAnimator networkAnimator;
 
+    public bool Open = false;
+    public bool Closed = true;
+
 	void Start () {
         d_Animator = GetComponent<Animator>();
         networkAnimator = GetComponent<NetworkAnimator>();
@@ -21,12 +24,34 @@ public class Door : MonoBehaviour {
         if (ThisDoorType == DoorType.General)
         {
             Debug.Log("Opening Door");
-            networkAnimator.SetTrigger("Action");
+            if (Closed)
+            {
+                d_Animator.SetTrigger("Open");
+                Closed = false;
+                Open = true;
+            }
+            else if (Open)
+            {
+                d_Animator.SetTrigger("Closed");
+                Closed = true;
+                Open = false;
+            }
             return true;
         }
         else if (key == ThisDoorType)
         {
-            networkAnimator.SetTrigger("Action");
+            if (Closed)
+            {
+                d_Animator.SetTrigger("Open");
+                Closed = false;
+                Open = true;
+            }
+            else if (Open)
+            {
+                d_Animator.SetTrigger("Closed");
+                Closed = true;
+                Open = false;
+            }
             return true;
         }
         return false;
