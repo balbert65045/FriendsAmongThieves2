@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Door : MonoBehaviour {
+public class Door : NetworkBehaviour {
 
     public enum DoorType { Red, Blue, Green, Gold, General }
     public DoorType ThisDoorType = DoorType.General;
@@ -18,7 +18,7 @@ public class Door : MonoBehaviour {
         d_Animator = GetComponentInParent<Animator>();
     }
 
-
+    [Command]
     public bool OpenCloseDoor(DoorType key)
     {
 
