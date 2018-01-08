@@ -9,51 +9,52 @@ public class Door : MonoBehaviour {
     public DoorType ThisDoorType = DoorType.General;
 
     Animator d_Animator;
-    NetworkAnimator networkAnimator;
 
     public bool Open = false;
+
     public bool Closed = true;
 
-	void Start () {
-        d_Animator = GetComponent<Animator>();
-        networkAnimator = GetComponent<NetworkAnimator>();
+	 void Start () {
+        d_Animator = GetComponentInParent<Animator>();
     }
+
 
     public bool OpenCloseDoor(DoorType key)
     {
-        if (ThisDoorType == DoorType.General)
-        {
-            Debug.Log("Opening Door");
-            if (Closed)
+
+            if (ThisDoorType == DoorType.General)
             {
-                d_Animator.SetTrigger("Open");
-                Closed = false;
-                Open = true;
+                Debug.Log("Opening Door");
+                if (Closed)
+                {
+                    d_Animator.SetTrigger("Open");
+                    Closed = false;
+                    Open = true;
+                }
+                else if (Open)
+                {
+                    d_Animator.SetTrigger("Closed");
+                    Closed = true;
+                    Open = false;
+                }
+                return true;
             }
-            else if (Open)
+            else if (key == ThisDoorType)
             {
-                d_Animator.SetTrigger("Closed");
-                Closed = true;
-                Open = false;
+                if (Closed)
+                {
+                    d_Animator.SetTrigger("Open");
+                    Closed = false;
+                    Open = true;
+                }
+                else if (Open)
+                {
+                    d_Animator.SetTrigger("Closed");
+                    Closed = true;
+                    Open = false;
+                }
+                return true;
             }
-            return true;
-        }
-        else if (key == ThisDoorType)
-        {
-            if (Closed)
-            {
-                d_Animator.SetTrigger("Open");
-                Closed = false;
-                Open = true;
-            }
-            else if (Open)
-            {
-                d_Animator.SetTrigger("Closed");
-                Closed = true;
-                Open = false;
-            }
-            return true;
-        }
         return false;
     }
 	

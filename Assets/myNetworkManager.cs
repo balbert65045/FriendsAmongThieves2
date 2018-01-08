@@ -14,6 +14,15 @@ public class myNetworkManager : NetworkManager {
     public override void OnStartHost()
     {
         base.OnStartHost();
+        DoorLocations doorlocals = FindObjectOfType<DoorLocations>();
+
+        GameObject door = Instantiate(spawnPrefabs[1], doorlocals.doorPositions[0].position, doorlocals.doorPositions[0].rotation);
+        Debug.Log(door.transform.position);
+        Debug.Log(doorlocals.doorPositions[0].position);
+        //door.transform.position = doorlocals.doorPositions[0].position;
+        //door.transform.rotation = doorlocals.doorPositions[0].rotation;
+
+
         Debug.Log(Time.timeSinceLevelLoad + " Host requested");
     }
 
