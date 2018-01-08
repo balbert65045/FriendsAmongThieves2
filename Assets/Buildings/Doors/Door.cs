@@ -19,7 +19,7 @@ public class Door : NetworkBehaviour {
     }
 
     [Command]
-    public bool OpenCloseDoor(DoorType key)
+    public void CmdOpenCloseDoor(DoorType key)
     {
 
             if (ThisDoorType == DoorType.General)
@@ -37,7 +37,7 @@ public class Door : NetworkBehaviour {
                     Closed = true;
                     Open = false;
                 }
-                return true;
+               // return true;
             }
             else if (key == ThisDoorType)
             {
@@ -53,9 +53,9 @@ public class Door : NetworkBehaviour {
                     Closed = true;
                     Open = false;
                 }
-                return true;
+              //  return true;
             }
-        return false;
+       // return false;
     }
 	
 }
