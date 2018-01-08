@@ -18,8 +18,8 @@ public class Door : NetworkBehaviour {
         d_Animator = GetComponentInParent<Animator>();
     }
 
-    [Command]
-    public void CmdOpenCloseDoor(DoorType key)
+    [ClientRpc]
+    public void RpcOpenCloseDoor(DoorType key)
     {
 
             if (ThisDoorType == DoorType.General)

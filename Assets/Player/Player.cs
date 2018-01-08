@@ -180,12 +180,12 @@ public class Player : NetworkBehaviour {
             if (Hit.transform.GetComponentInParent<Door>())
             {
                 // Test if its a general door
-                Hit.transform.GetComponentInParent<Door>().CmdOpenCloseDoor(Door.DoorType.General);
+                Hit.transform.GetComponentInParent<Door>().RpcOpenCloseDoor(Door.DoorType.General);
                 // Then try all keys 
                 foreach ( Key key in inventory.keys)
                 {
                     //TODO may have problems with this
-                    Hit.transform.GetComponentInParent<Door>().CmdOpenCloseDoor(key.KeyType);
+                    Hit.transform.GetComponentInParent<Door>().RpcOpenCloseDoor(key.KeyType);
                     
                 }
             }
