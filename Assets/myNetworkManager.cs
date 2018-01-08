@@ -14,14 +14,14 @@ public class myNetworkManager : NetworkManager {
     public override void OnStartHost()
     {
         base.OnStartHost();
-        DoorLocations doorlocals = FindObjectOfType<DoorLocations>();
 
-        GameObject door = Instantiate(spawnPrefabs[1], doorlocals.doorPositions[0].position, doorlocals.doorPositions[0].rotation);
-        Debug.Log(door.transform.position);
-        Debug.Log(doorlocals.doorPositions[0].position);
         //door.transform.position = doorlocals.doorPositions[0].position;
         //door.transform.rotation = doorlocals.doorPositions[0].rotation;
+        //DoorLocations doorlocals = FindObjectOfType<DoorLocations>();
 
+        //GameObject door = Instantiate(spawnPrefabs[1], doorlocals.doorPositions[0].position, doorlocals.doorPositions[0].rotation);
+        //Debug.Log(door.transform.position);
+        //Debug.Log(doorlocals.doorPositions[0].position);
 
         Debug.Log(Time.timeSinceLevelLoad + " Host requested");
     }
@@ -37,5 +37,10 @@ public class myNetworkManager : NetworkManager {
         base.OnClientConnect(conn);
         Debug.Log(Time.timeSinceLevelLoad + " Client connected to IP:" + conn.address);
         Debug.Log(Network.player.ipAddress);
+
+        DoorLocations doorlocals = FindObjectOfType<DoorLocations>();
+        GameObject door = Instantiate(spawnPrefabs[1], doorlocals.doorPositions[0].position, doorlocals.doorPositions[0].rotation);
+        NetworkServer.Spawn(door);
+
     }
 }
