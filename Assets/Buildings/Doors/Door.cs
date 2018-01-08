@@ -18,6 +18,7 @@ public class Door : NetworkBehaviour {
         d_Animator = GetComponentInParent<Animator>();
     }
 
+
     [ClientRpc]
     public void RpcOpenCloseDoor(DoorType key)
     {

@@ -180,12 +180,12 @@ public class Player : NetworkBehaviour {
             if (Hit.transform.GetComponentInParent<Door>())
             {
                 // Test if its a general door
-                Hit.transform.GetComponentInParent<Door>().RpcOpenCloseDoor(Door.DoorType.General);
+                CmdOpenCloseDoor(Door.DoorType.General, Hit.transform.GetComponentInParent<Door>().gameObject);
                 // Then try all keys 
                 foreach ( Key key in inventory.keys)
                 {
                     //TODO may have problems with this
-                    Hit.transform.GetComponentInParent<Door>().RpcOpenCloseDoor(key.KeyType);
+                    CmdOpenCloseDoor(key.KeyType, Hit.transform.GetComponentInParent<Door>().gameObject);
                     
                 }
             }
@@ -197,6 +197,16 @@ public class Player : NetworkBehaviour {
 
         }
     }
+
+    [Command]
+    public void CmdOpenCloseDoor(Door.DoorType key, GameObject obj)
+    {
+        NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
+        objNetID.AssignClientAuthority(connectionToClient);
+        obj.GetComponent<Door>().RpcOpenCloseDoor(key);
+        objNetID.RemoveClientAuthority(connectionToClient);
+    }
+
 
     /// <summary>
     //private void ChecktoVaultWindow()
