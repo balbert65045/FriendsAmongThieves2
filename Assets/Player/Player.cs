@@ -177,15 +177,15 @@ public class Player : NetworkBehaviour {
         Ray ActionRay = new Ray(transform.position + Vector3.up * .5f, transform.forward);
         if (Physics.Raycast(ActionRay, out Hit, 2f))
         {
-            if (Hit.transform.GetComponent<Door>())
+            if (Hit.transform.GetComponentInParent<Door>())
             {
                 // Test if its a general door
-                Hit.transform.GetComponent<Door>().CmdOpenCloseDoor(Door.DoorType.General);
+                Hit.transform.GetComponentInParent<Door>().CmdOpenCloseDoor(Door.DoorType.General);
                 // Then try all keys 
                 foreach ( Key key in inventory.keys)
                 {
                     //TODO may have problems with this
-                    Hit.transform.GetComponent<Door>().CmdOpenCloseDoor(key.KeyType);
+                    Hit.transform.GetComponentInParent<Door>().CmdOpenCloseDoor(key.KeyType);
                     
                 }
             }
