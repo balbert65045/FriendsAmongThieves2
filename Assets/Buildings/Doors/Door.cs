@@ -9,9 +9,9 @@ public class Door : NetworkBehaviour {
     public DoorType ThisDoorType = DoorType.General;
 
     Animator d_Animator;
-
+    [SyncVar]
     public bool Open = false;
-
+    [SyncVar]
     public bool Closed = true;
 
 	 void Start () {
