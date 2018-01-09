@@ -81,6 +81,7 @@ public class Player : NetworkBehaviour {
 
     public void RelockCursor(){ freeLookCam.LockCursor();}
 
+    //This is where we take the item
     public void TakeItemFromChest(usableItem Item, Chest chest)
     {
         inventory.AddItem(Item.gameObject);
