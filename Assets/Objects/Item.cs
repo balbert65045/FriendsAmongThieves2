@@ -19,7 +19,7 @@ public class Item : MonoBehaviour {
     {
         Debug.Log(ObjectHeld);
         playerActive.AddItem(ObjectHeld);
-        chestActive.TakeItemOut(ObjectHeld);
+        chestActive.CmdTakeItemOut(ObjectHeld);
         Destroy(this.gameObject);
     }
 }

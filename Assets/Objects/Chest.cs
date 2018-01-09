@@ -11,7 +11,7 @@ public class Chest : NetworkBehaviour {
     public SyncListInt ItemsIndexHeld = new SyncListInt();
 
 
-    public void Start()
+    public override void OnStartServer()
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         foreach (GameObject item in itemsHeld)
@@ -29,6 +29,16 @@ public class Chest : NetworkBehaviour {
         }
     }
 
+    public override void OnStartClient()
+    {
+        ItemsIndexHeld.Callback = OnItemsUpdated;
+    }
+
+    private void OnItemsUpdated(SyncListInt.Operation op, int itemIndex)
+    {
+        Debug.Log("Items Changed");
+    }
+
 
     public void OpenChest(Player playerOpening)
     {
@@ -44,8 +54,8 @@ public class Chest : NetworkBehaviour {
         ChestUI.OpenChest(itemsHeld, playerOpening, this);
     }
 
-  //  [Command]
-    public void TakeItemOut(GameObject item)
+   [Command]
+    public void CmdTakeItemOut(GameObject item)
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         for (int i = 0; i < itemLUT.Items.Count; i++)
