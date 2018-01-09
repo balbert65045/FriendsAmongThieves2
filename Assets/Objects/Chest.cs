@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class Chest : NetworkBehaviour {
 
     public List<GameObject> itemsHeld;
-    public SyncList<int> ItemsIndexHeld;
+
+    public SyncListInt ItemsIndexHeld = new SyncListInt();
 
 
-    public void SetUpChest()
+    public void Start()
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         foreach (GameObject item in itemsHeld)
         {
             for (int i = 0; i < itemLUT.Items.Count; i++)
             {
-              //  Debug.Log(i);
+                Debug.Log(i);
                 if (!itemLUT.Items.Contains(item)) { Debug.LogError("Item in chest is not in lookup table"); }
                 else if (item == itemLUT.Items[i])
                 {
@@ -30,7 +32,7 @@ public class Chest : NetworkBehaviour {
 
     public void OpenChest(Player playerOpening)
     {
-        Debug.Log(ItemsIndexHeld);
+      //  Debug.Log(ItemsIndexHeld);
         ChestStorageUI ChestUI = FindObjectOfType<ChestStorageUI>();
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         itemsHeld = new List<GameObject>();
@@ -38,10 +40,11 @@ public class Chest : NetworkBehaviour {
         {
             itemsHeld.Add(itemLUT.Items[Index]);
         }
-         
+
         ChestUI.OpenChest(itemsHeld, playerOpening, this);
     }
 
+  //  [Command]
     public void TakeItemOut(GameObject item)
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();

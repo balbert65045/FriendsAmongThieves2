@@ -22,13 +22,13 @@ public class Spawner : NetworkBehaviour {
             //    NetworkServer.Spawn(door);
             //    doorIndex++;
             //}
-             if (obj.GetComponent<Chest>())
-            {
-                GameObject chest = Instantiate(obj, PrefabLocations.chestPositions[chestIndex].position, PrefabLocations.chestPositions[chestIndex].rotation);
-                NetworkServer.Spawn(chest);
-               // chest.GetComponent<Chest>().SetUpChest();
-                chestIndex++;
-            }
+            // if (obj.GetComponent<Chest>())
+            //{
+            //    GameObject chest = Instantiate(obj, PrefabLocations.chestPositions[chestIndex].position, PrefabLocations.chestPositions[chestIndex].rotation);
+            //    NetworkServer.Spawn(chest);
+            //   // chest.GetComponent<Chest>().SetUpChest();
+            //    chestIndex++;
+            //}
         }
 
        
