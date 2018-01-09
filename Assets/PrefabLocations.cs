@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorLocations : MonoBehaviour {
+public class PrefabLocations : MonoBehaviour {
 
     // Use this for initialization
     public Transform[] doorPositions;
 
-	void Start () {
+    public Transform[] chestPositions;
+
+    void Start () {
 		
 	}
 	

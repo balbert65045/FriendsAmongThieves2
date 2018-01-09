@@ -19,6 +19,7 @@ public class Door : NetworkBehaviour {
     }
 
 
+
     [ClientRpc]
     public void RpcOpenCloseDoor(DoorType key)
     {

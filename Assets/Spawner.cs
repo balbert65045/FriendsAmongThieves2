@@ -10,9 +10,28 @@ public class Spawner : NetworkBehaviour {
     {
         Debug.Log("ServerStart");
         myNetworkManager MynetworkManager = FindObjectOfType<myNetworkManager>();
-        DoorLocations doorlocals = FindObjectOfType<DoorLocations>();
-        GameObject door = Instantiate(MynetworkManager.spawnPrefabs[1], doorlocals.doorPositions[0].position, doorlocals.doorPositions[0].rotation);
-        NetworkServer.Spawn(door);
+        PrefabLocations PrefabLocations = FindObjectOfType<PrefabLocations>();
+
+        int doorIndex = 0;
+        int chestIndex = 0;
+        foreach (GameObject obj in MynetworkManager.spawnPrefabs)
+        {
+            //if (obj.GetComponent<Door>())
+            //{
+            //    GameObject door = Instantiate(obj, PrefabLocations.doorPositions[doorIndex].position, PrefabLocations.doorPositions[doorIndex].rotation);
+            //    NetworkServer.Spawn(door);
+            //    doorIndex++;
+            //}
+             if (obj.GetComponent<Chest>())
+            {
+                GameObject chest = Instantiate(obj, PrefabLocations.chestPositions[chestIndex].position, PrefabLocations.chestPositions[chestIndex].rotation);
+                NetworkServer.Spawn(chest);
+               // chest.GetComponent<Chest>().SetUpChest();
+                chestIndex++;
+            }
+        }
+
+       
     }
 
     void Start () {
