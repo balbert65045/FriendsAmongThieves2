@@ -55,15 +55,9 @@ public class Chest : NetworkBehaviour {
     }
 
    [ClientRpc]
-    public void RpcTakeItemOut(GameObject item)
+    public void RpcTakeItemOut(int ItemIndex)
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
-        for (int i = 0; i < itemLUT.Items.Count; i++)
-        {
-            if (item == itemLUT.Items[i])
-            {
-                ItemsIndexHeld.Remove(i);
-            }
-        }
+        ItemsIndexHeld.Remove(ItemIndex);
     }
 }

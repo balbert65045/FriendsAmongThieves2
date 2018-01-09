@@ -6,19 +6,16 @@ public class Item : MonoBehaviour {
 
     GameObject ObjectHeld;
     Player playerActive;
-    Chest chestActive;
 
-    public void SetPlayerChestandPlayer(Player player, Chest chest, GameObject Object)
+    public void SetPlayerChestandPlayer(Player player, GameObject Object)
     {
         playerActive = player;
-        chestActive = chest;
         ObjectHeld = Object;
     }
 
     public void Clicked()
     {
-        Debug.Log(ObjectHeld);
-
-        playerActive.TakeItemFromChest(ObjectHeld.GetComponent<usableItem>(), chestActive);
+        playerActive.TakeItemFromChest(ObjectHeld.GetComponent<usableItem>());
+        Destroy(gameObject);
     }
 }

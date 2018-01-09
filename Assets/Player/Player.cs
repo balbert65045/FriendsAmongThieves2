@@ -63,6 +63,8 @@ public class Player : NetworkBehaviour {
     UsableItemsUI usableItemsUI;
     UsableObject currentItemUsing = UsableObject.Rock;
 
+    Chest ChestActiveWith;
+
 
     public void ObjectGrabbed()
     {
@@ -82,24 +84,32 @@ public class Player : NetworkBehaviour {
     public void RelockCursor(){ freeLookCam.LockCursor();}
 
     //This is where we take the item
-    public void TakeItemFromChest(usableItem Item, Chest chest)
+    public void TakeItemFromChest(usableItem Item)
     {
         inventory.AddItem(Item.gameObject);
         int amount = inventory.QuantityCheck(currentItemUsing);
         usableItemsUI.ShowNewQuantity(amount);
-        CmdRemoveItemFromChest(Item, chest);
+
+        // See what index number the object is
+        List<GameObject> items = FindObjectOfType<ItemLookUpTable>().Items;
+        int itemIndex = -1;
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (Item.gameObject == items[i])
+            {
+                itemIndex = i;
+            }
+        }
+        CmdRemoveItemFromChest(itemIndex);
     }
 
     [Command]
-    void CmdRemoveItemFromChest(usableItem item, Chest chest)
+    void CmdRemoveItemFromChest(int itemIndex)
     {
-        NetworkIdentity itemNetID = item.gameObject.GetComponent<NetworkIdentity>();
-        itemNetID.AssignClientAuthority(connectionToClient);
-        NetworkIdentity chestNetID = chest.gameObject.GetComponent<NetworkIdentity>();
+        NetworkIdentity chestNetID = ChestActiveWith.gameObject.GetComponent<NetworkIdentity>();
         chestNetID.AssignClientAuthority(connectionToClient);
-        chest.gameObject.GetComponent<Chest>().RpcTakeItemOut(item.gameObject);
+        ChestActiveWith.RpcTakeItemOut(itemIndex);
         chestNetID.RemoveClientAuthority(connectionToClient);
-        itemNetID.RemoveClientAuthority(connectionToClient);
     }
 
 
@@ -206,6 +216,7 @@ public class Player : NetworkBehaviour {
             else if (Hit.transform.GetComponent<Chest>())
             {
                 Hit.transform.GetComponent<Chest>().OpenChest(this);
+                ChestActiveWith = Hit.transform.GetComponent<Chest>();
                 freeLookCam.UnlockCursor();
             }
 

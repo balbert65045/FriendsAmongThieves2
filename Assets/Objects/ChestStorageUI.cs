@@ -85,7 +85,7 @@ public class ChestStorageUI : MonoBehaviour {
 
 
             if (image == null) { Debug.LogError("item has no component linked to it"); }
-            image.gameObject.GetComponent<Item>().SetPlayerChestandPlayer(player, chest, item);
+            image.gameObject.GetComponent<Item>().SetPlayerChestandPlayer(player, item);
             slotIndex++;
         }
     }
