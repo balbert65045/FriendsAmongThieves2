@@ -92,10 +92,13 @@ public class Player : NetworkBehaviour {
     [Command]
     void CmdRemoveItemFromChest(GameObject item, Chest chest)
     {
-        NetworkIdentity objNetID = chest.gameObject.GetComponent<NetworkIdentity>();
-        objNetID.AssignClientAuthority(connectionToClient);
+        NetworkIdentity itemNetID = item.GetComponent<NetworkIdentity>();
+        itemNetID.AssignClientAuthority(connectionToClient);
+        NetworkIdentity chestNetID = chest.gameObject.GetComponent<NetworkIdentity>();
+        chestNetID.AssignClientAuthority(connectionToClient);
         chest.RpcTakeItemOut(item);
-        objNetID.RemoveClientAuthority(connectionToClient);
+        chestNetID.RemoveClientAuthority(connectionToClient);
+        itemNetID.RemoveClientAuthority(connectionToClient);
     }
 
 
