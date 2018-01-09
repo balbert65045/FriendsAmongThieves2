@@ -96,7 +96,7 @@ public class Player : NetworkBehaviour {
         itemNetID.AssignClientAuthority(connectionToClient);
         NetworkIdentity chestNetID = chest.gameObject.GetComponent<NetworkIdentity>();
         chestNetID.AssignClientAuthority(connectionToClient);
-        chest.RpcTakeItemOut(item);
+        chest.gameObject.GetComponent<Chest>().RpcTakeItemOut(item);
         chestNetID.RemoveClientAuthority(connectionToClient);
         itemNetID.RemoveClientAuthority(connectionToClient);
     }
