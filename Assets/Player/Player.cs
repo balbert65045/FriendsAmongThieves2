@@ -81,22 +81,22 @@ public class Player : NetworkBehaviour {
 
     public void RelockCursor(){ freeLookCam.LockCursor();}
 
-    public void TakeItemFromChest(GameObject Item, Chest chest)
+    public void TakeItemFromChest(usableItem Item, Chest chest)
     {
-        inventory.AddItem(Item);
+        inventory.AddItem(Item.gameObject);
         int amount = inventory.QuantityCheck(currentItemUsing);
         usableItemsUI.ShowNewQuantity(amount);
         CmdRemoveItemFromChest(Item, chest);
     }
 
     [Command]
-    void CmdRemoveItemFromChest(GameObject item, Chest chest)
+    void CmdRemoveItemFromChest(usableItem item, Chest chest)
     {
-        NetworkIdentity itemNetID = item.GetComponent<NetworkIdentity>();
+        NetworkIdentity itemNetID = item.gameObject.GetComponent<NetworkIdentity>();
         itemNetID.AssignClientAuthority(connectionToClient);
         NetworkIdentity chestNetID = chest.gameObject.GetComponent<NetworkIdentity>();
         chestNetID.AssignClientAuthority(connectionToClient);
-        chest.gameObject.GetComponent<Chest>().RpcTakeItemOut(item);
+        chest.gameObject.GetComponent<Chest>().RpcTakeItemOut(item.gameObject);
         chestNetID.RemoveClientAuthority(connectionToClient);
         itemNetID.RemoveClientAuthority(connectionToClient);
     }

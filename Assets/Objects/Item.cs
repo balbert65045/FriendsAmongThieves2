@@ -18,7 +18,8 @@ public class Item : MonoBehaviour {
     public void Clicked()
     {
         Debug.Log(ObjectHeld);
-        playerActive.TakeItemFromChest(ObjectHeld, chestActive);
-        Destroy(this.gameObject);
+        //if (ObjectHeld.Ge)
+        playerActive.TakeItemFromChest(ObjectHeld.GetComponent<usableItem>(), chestActive);
+       // Destroy(this.gameObject);
     }
 }
