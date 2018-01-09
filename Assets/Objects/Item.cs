@@ -18,8 +18,7 @@ public class Item : MonoBehaviour {
     public void Clicked()
     {
         Debug.Log(ObjectHeld);
-        playerActive.AddItem(ObjectHeld);
-        chestActive.CmdTakeItemOut(ObjectHeld);
+        playerActive.TakeItemFromChest(ObjectHeld, chestActive);
         Destroy(this.gameObject);
     }
 }

@@ -54,8 +54,8 @@ public class Chest : NetworkBehaviour {
         ChestUI.OpenChest(itemsHeld, playerOpening, this);
     }
 
-   [Command]
-    public void CmdTakeItemOut(GameObject item)
+   [ClientRpc]
+    public void RpcTakeItemOut(GameObject item)
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         for (int i = 0; i < itemLUT.Items.Count; i++)
