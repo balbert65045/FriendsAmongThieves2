@@ -100,13 +100,13 @@ public class Player : NetworkBehaviour {
                 itemIndex = i;
             }
         }
-        CmdRemoveItemFromChest(itemIndex);
+        CmdRemoveItemFromChest(itemIndex, ChestActiveWith.gameObject);
     }
 
     [Command]
-    void CmdRemoveItemFromChest(int itemIndex)
+    void CmdRemoveItemFromChest(int itemIndex, GameObject obj)
     {
-        NetworkIdentity chestNetID = ChestActiveWith.gameObject.GetComponent<NetworkIdentity>();
+        NetworkIdentity chestNetID = obj.GetComponent<NetworkIdentity>();
         chestNetID.AssignClientAuthority(connectionToClient);
         ChestActiveWith.RpcTakeItemOut(itemIndex);
         chestNetID.RemoveClientAuthority(connectionToClient);
