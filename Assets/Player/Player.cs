@@ -109,7 +109,7 @@ public class Player : NetworkBehaviour {
     {
         NetworkIdentity chestNetID = obj.GetComponent<NetworkIdentity>();
         chestNetID.AssignClientAuthority(connectionToClient);
-        obj.GetComponent<Chest>().RpcTakeItemOut(itemIndex);
+        obj.GetComponent<Chest>().TakeItemOut(itemIndex);
         chestNetID.RemoveClientAuthority(connectionToClient);
     }
 
