@@ -100,8 +100,8 @@ public class Player : NetworkBehaviour {
                 itemIndex = i;
             }
         }
-        ChestActiveWith.RpcTakeItemOut(itemIndex);
-       // CmdRemoveItemFromChest(itemIndex, ChestActiveWith.gameObject);
+       
+        CmdRemoveItemFromChest(itemIndex, ChestActiveWith.gameObject);
     }
 
     [Command]
@@ -109,7 +109,7 @@ public class Player : NetworkBehaviour {
     {
         NetworkIdentity chestNetID = obj.GetComponent<NetworkIdentity>();
         chestNetID.AssignClientAuthority(connectionToClient);
-        ChestActiveWith.RpcTakeItemOut(itemIndex);
+        obj.GetComponent<Chest>().RpcTakeItemOut(itemIndex);
         chestNetID.RemoveClientAuthority(connectionToClient);
     }
 
