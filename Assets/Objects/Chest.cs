@@ -10,6 +10,8 @@ public class Chest : NetworkBehaviour {
 
     public SyncListInt ItemsIndexHeld = new SyncListInt();
 
+    [SyncVar]
+    public bool InUse = false;
 
     public override void OnStartServer()
     {
@@ -42,7 +44,8 @@ public class Chest : NetworkBehaviour {
 
     public void OpenChest(Player playerOpening)
     {
-      //  Debug.Log(ItemsIndexHeld);
+        //  Debug.Log(ItemsIndexHeld);
+        InUse = true;
         ChestStorageUI ChestUI = FindObjectOfType<ChestStorageUI>();
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         itemsHeld = new List<GameObject>();
@@ -52,6 +55,11 @@ public class Chest : NetworkBehaviour {
         }
 
         ChestUI.OpenChest(itemsHeld, playerOpening, this);
+    }
+
+    public void CloseChest()
+    {
+        InUse = false;
     }
 
    [ClientRpc]

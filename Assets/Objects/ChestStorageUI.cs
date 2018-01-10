@@ -17,18 +17,21 @@ public class ChestStorageUI : MonoBehaviour {
 
     Player player;
 
+    Chest chestLinkedTo;
+
 	void Start () {
         ChestUI.SetActive(false);
     }
 	
-	// Update is called once per frame
+	// Check to see when the chest is active if the escape key is pressed or player moves to close out of that screen
+    //TODO change it from magnitude to something else
 	void Update () {
 		if (ChestUI.activeSelf)
         {
             if (Input.GetButtonDown("Cancel") || player.GetComponent<Rigidbody>().velocity.magnitude > 1f)
             {
-
                 ChestUI.SetActive(false);
+                chestLinkedTo.CloseChest();
                 player.RelockCursor();
                 foreach (Transform Slot in Slots)
                 {
@@ -41,9 +44,11 @@ public class ChestStorageUI : MonoBehaviour {
         }
 	}
 
+    // Find the item and the image linked to it 
     public void OpenChest(List<GameObject> items, Player newPlayer, Chest chest)
     {
         ChestUI.SetActive(true);
+        chestLinkedTo = chest;
         int slotIndex = 0;
         player = newPlayer;
         foreach (GameObject item in items)

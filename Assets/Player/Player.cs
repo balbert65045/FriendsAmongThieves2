@@ -216,9 +216,12 @@ public class Player : NetworkBehaviour {
             }
             else if (Hit.transform.GetComponent<Chest>())
             {
-                Hit.transform.GetComponent<Chest>().OpenChest(this);
-                ChestActiveWith = Hit.transform.GetComponent<Chest>();
-                freeLookCam.UnlockCursor();
+                if (!Hit.transform.GetComponent<Chest>().InUse)
+                {
+                    Hit.transform.GetComponent<Chest>().OpenChest(this);
+                    ChestActiveWith = Hit.transform.GetComponent<Chest>();
+                    freeLookCam.UnlockCursor();
+                }
             }
 
         }
