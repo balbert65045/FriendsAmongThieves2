@@ -31,7 +31,7 @@ public class ChestStorageUI : MonoBehaviour {
             if (Input.GetButtonDown("Cancel") || player.GetComponent<Rigidbody>().velocity.magnitude > 1f)
             {
                 ChestUI.SetActive(false);
-                chestLinkedTo.CloseChest();
+                player.CloseChest();
                 player.RelockCursor();
                 foreach (Transform Slot in Slots)
                 {

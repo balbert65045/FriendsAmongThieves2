@@ -45,8 +45,6 @@ public class Chest : NetworkBehaviour {
     public void OpenChest(Player playerOpening)
     {
         //  Debug.Log(ItemsIndexHeld);
-
-        InUse = true;
         ChestStorageUI ChestUI = FindObjectOfType<ChestStorageUI>();
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         itemsHeld = new List<GameObject>();
@@ -58,7 +56,10 @@ public class Chest : NetworkBehaviour {
         ChestUI.OpenChest(itemsHeld, playerOpening, this);
     }
 
-    
+    public void SetChestOpen()
+    {
+        InUse = true;
+    }
 
     public void CloseChest()
     {
