@@ -218,9 +218,8 @@ public class Player : NetworkBehaviour {
             {
                 if (!Hit.transform.GetComponent<Chest>().InUse)
                 {
-                    NetworkIdentity objNetID = Hit.transform.GetComponent<NetworkIdentity>();
-                    objNetID.AssignClientAuthority(connectionToClient);
-                    Hit.transform.GetComponent<Chest>().OpenChest(this);
+                    //  Hit.transform.GetComponent<Chest>().OpenChest(this);
+                    CmdOpenChest(Hit.transform.gameObject);
                     ChestActiveWith = Hit.transform.GetComponent<Chest>();
                     freeLookCam.UnlockCursor();
                 }
@@ -228,6 +227,15 @@ public class Player : NetworkBehaviour {
 
         }
     }
+    [Command]
+    public void CmdOpenChest(GameObject obj)
+    {
+        NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
+        objNetID.AssignClientAuthority(connectionToClient);
+        obj.GetComponent<Chest>().OpenChest(this);
+        objNetID.RemoveClientAuthority(connectionToClient);
+    }
+
 
     [Command]
     public void CmdOpenCloseDoor(Door.DoorType key, GameObject obj)
