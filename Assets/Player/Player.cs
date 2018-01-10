@@ -218,6 +218,8 @@ public class Player : NetworkBehaviour {
             {
                 if (!Hit.transform.GetComponent<Chest>().InUse)
                 {
+                    NetworkIdentity objNetID = Hit.transform.GetComponent<NetworkIdentity>();
+                    objNetID.AssignClientAuthority(connectionToClient);
                     Hit.transform.GetComponent<Chest>().OpenChest(this);
                     ChestActiveWith = Hit.transform.GetComponent<Chest>();
                     freeLookCam.UnlockCursor();
