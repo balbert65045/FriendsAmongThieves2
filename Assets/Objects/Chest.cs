@@ -45,11 +45,8 @@ public class Chest : NetworkBehaviour {
     public void OpenChest(Player playerOpening)
     {
         //  Debug.Log(ItemsIndexHeld);
-        if (!isServer)
-        {
-            return;
-        }
-        InUse = true;
+
+        CmdSetOpenChest();
         ChestStorageUI ChestUI = FindObjectOfType<ChestStorageUI>();
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
         itemsHeld = new List<GameObject>();
@@ -59,6 +56,12 @@ public class Chest : NetworkBehaviour {
         }
 
         ChestUI.OpenChest(itemsHeld, playerOpening, this);
+    }
+
+    [Command]
+    private void CmdSetOpenChest()
+    {
+        InUse = true;
     }
 
     public void CloseChest()
