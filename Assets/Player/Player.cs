@@ -257,7 +257,7 @@ public class Player : NetworkBehaviour {
     {
         NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
         objNetID.AssignClientAuthority(connectionToClient);
-        obj.GetComponent<Door>().OpenCloseDoor(key);
+        obj.GetComponent<Door>().RpcOpenCloseDoor(key);
         objNetID.RemoveClientAuthority(connectionToClient);
     }
 

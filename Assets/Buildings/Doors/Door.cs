@@ -20,8 +20,8 @@ public class Door : NetworkBehaviour {
 
 
 
-    
-    public void OpenCloseDoor(DoorType key)
+    [ClientRpc]
+    public void RpcOpenCloseDoor(DoorType key)
     {
 
             if (ThisDoorType == DoorType.General)
