@@ -66,7 +66,6 @@ public class Chest : NetworkBehaviour {
         InUse = false;
     }
 
-   //[ClientRpc]
     public void TakeItemOut(int ItemIndex)
     {
         ItemLookUpTable itemLUT = FindObjectOfType<ItemLookUpTable>();
