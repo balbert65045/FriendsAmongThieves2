@@ -170,7 +170,7 @@ public class Player : NetworkBehaviour {
             switch (currentItemUsing)
             {
                 case UsableObject.Rock:
-                    ThrowRock();
+                    CmdThrowRock();
                     break;
                 case UsableObject.SleepDart:
                     ThrowDart();
@@ -261,13 +261,15 @@ public class Player : NetworkBehaviour {
 
     // Launches the rock from above head 
     //TODO make this an ability to be able to aim
-    private void ThrowRock()
+    [Command]
+    private void CmdThrowRock()
     {
         FreeLookCam rig = FindObjectOfType<FreeLookCam>();
         Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
+        NetworkServer.Spawn(rock1);
         rock1.GetComponent<Rigidbody>().AddForce(AimRay.direction * BallLaunchForce);
     }
 
