@@ -21,43 +21,21 @@ public class Door : NetworkBehaviour {
 
 
     [ClientRpc]
-    public void RpcOpenCloseDoor(DoorType key)
+    public void RpcOpenCloseDoor()
     {
-
-            if (ThisDoorType == DoorType.General)
+            Debug.Log("Opening Door");
+            if (Closed)
             {
-                Debug.Log("Opening Door");
-                if (Closed)
-                {
-                    d_Animator.SetTrigger("Open");
-                    Closed = false;
-                    Open = true;
-                }
-                else if (Open)
-                {
-                    d_Animator.SetTrigger("Closed");
-                    Closed = true;
-                    Open = false;
-                }
-               // return true;
+                d_Animator.SetTrigger("Open");
+                Closed = false;
+                Open = true;
             }
-            else if (key == ThisDoorType)
+            else if (Open)
             {
-                if (Closed)
-                {
-                    d_Animator.SetTrigger("Open");
-                    Closed = false;
-                    Open = true;
-                }
-                else if (Open)
-                {
-                    d_Animator.SetTrigger("Closed");
-                    Closed = true;
-                    Open = false;
-                }
-              //  return true;
+                d_Animator.SetTrigger("Closed");
+                Closed = true;
+                Open = false;
             }
-       // return false;
     }
 	
 }

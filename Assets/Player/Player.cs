@@ -204,14 +204,25 @@ public class Player : NetworkBehaviour {
         {
             if (Hit.transform.GetComponentInParent<Door>())
             {
-                // Test if its a general door
-                CmdOpenCloseDoor(Door.DoorType.General, Hit.transform.GetComponentInParent<Door>().gameObject);
-                // Then try all keys 
-                foreach ( Key key in inventory.keys)
+                Door.DoorType DoorType = Hit.transform.GetComponentInParent<Door>().ThisDoorType;
+
+                switch (DoorType)
                 {
-                    //TODO may have problems with this
-                    CmdOpenCloseDoor(key.KeyType, Hit.transform.GetComponentInParent<Door>().gameObject);
-                    
+                    case Door.DoorType.General:
+                        CmdOpenCloseDoor(Hit.transform.GetComponentInParent<Door>().gameObject);
+                        break;
+                    case Door.DoorType.Blue:
+                        if (inventory.BlueKeyHeld.activeSelf) { CmdOpenCloseDoor(Hit.transform.GetComponentInParent<Door>().gameObject); }
+                        break;
+                    case Door.DoorType.Red:
+                        if (inventory.RedKeyHeld.activeSelf) { CmdOpenCloseDoor(Hit.transform.GetComponentInParent<Door>().gameObject); }
+                        break;
+                    case Door.DoorType.Green:
+                        if (inventory.GreenKeyHeld.activeSelf) { CmdOpenCloseDoor(Hit.transform.GetComponentInParent<Door>().gameObject); }
+                        break;
+                    case Door.DoorType.Gold:
+                        if (inventory.GoldKeyHeld.activeSelf) { CmdOpenCloseDoor(Hit.transform.GetComponentInParent<Door>().gameObject); }
+                        break;
                 }
             }
             else if (Hit.transform.GetComponent<Chest>())
@@ -253,33 +264,14 @@ public class Player : NetworkBehaviour {
 
 
     [Command]
-    public void CmdOpenCloseDoor(Door.DoorType key, GameObject obj)
+    public void CmdOpenCloseDoor(GameObject obj)
     {
         NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
         objNetID.AssignClientAuthority(connectionToClient);
-        obj.GetComponent<Door>().RpcOpenCloseDoor(key);
+        obj.GetComponent<Door>().RpcOpenCloseDoor();
         objNetID.RemoveClientAuthority(connectionToClient);
     }
 
-
-    /// <summary>
-    //private void ChecktoVaultWindow()
-    //{
-    //    if (VaultAreaInside && PlayerAction)
-    //    {
-    //        Debug.Log("VaultAction!");
-    //        thirdPersonUserControl.MoveDisabled = true;
-    //        transform.position = windowStartPosition;
-    //        transform.LookAt(WindowTransform);
-    //        thirdPersonCharacter.VaultAction();
-    //    }
-
-    //    else if (!VaultAreaInside)
-    //    {
-    //        thirdPersonUserControl.MoveDisabled = false;
-    //    }
-    //}
-    /// </summary>
 
     // Launches the rock from above head 
     //TODO make this an ability to be able to aim

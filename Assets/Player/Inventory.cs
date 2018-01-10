@@ -14,10 +14,10 @@ public class Inventory : MonoBehaviour {
     public List<Key> keys;
 
 
-    GameObject BlueKeyHeld;
-    GameObject RedKeyHeld;
-    GameObject GreenKeyHeld;
-    GameObject GoldKeyHeld;
+   public GameObject BlueKeyHeld;
+   public GameObject RedKeyHeld;
+   public GameObject GreenKeyHeld;
+   public GameObject GoldKeyHeld;
 
    public void LinkKey(KeyImage key)
     {
