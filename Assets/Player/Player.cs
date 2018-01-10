@@ -29,8 +29,6 @@ public class Player : NetworkBehaviour {
     //[SerializeField]
     //float DartUpForce = 200;
 
-
-
     public float CurrentStamina = 100f;
 
     
@@ -45,20 +43,14 @@ public class Player : NetworkBehaviour {
     SoundSphere soundSphere;
     SphereCollider SoundCollider;
     itemSocket itemSocket;
-
     Inventory inventory;
 
     ThirdPersonUserControl thirdPersonUserControl;
     FreeLookCam freeLookCam;
-
     ThirdPersonCharacter thirdPersonCharacter;
      
     // Not needed at the moment
     public bool VaultAreaInside = false;
-
-
-    Vector3 windowStartPosition;
-    Transform WindowTransform;
 
     UsableItemsUI usableItemsUI;
     UsableObject currentItemUsing = UsableObject.Rock;
@@ -73,13 +65,6 @@ public class Player : NetworkBehaviour {
     }
 
     public void DisableCam(){freeLookCam.enabled = false;}
-
-    //public void InVaultArea(Vector3 startPosition, Transform window, float speed)
-    //{
-    //    windowStartPosition = startPosition;
-    //    WindowTransform = window;
-    //    thirdPersonCharacter.VaultUpSpeed = speed;
-    //}
 
     public void RelockCursor(){ freeLookCam.LockCursor();}
 
@@ -111,6 +96,30 @@ public class Player : NetworkBehaviour {
         chestNetID.AssignClientAuthority(connectionToClient);
         obj.GetComponent<Chest>().TakeItemOut(itemIndex);
         chestNetID.RemoveClientAuthority(connectionToClient);
+    }
+
+
+    [Command]
+     void CmdOpenChest(GameObject obj)
+    {
+        NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
+        objNetID.AssignClientAuthority(connectionToClient);
+        obj.GetComponent<Chest>().SetChestOpen();
+        objNetID.RemoveClientAuthority(connectionToClient);
+    }
+
+    public void CloseChest()
+    {
+        CmdCloseChest(ChestActiveWith.gameObject);
+    }
+
+    [Command]
+     void CmdCloseChest(GameObject obj)
+    {
+        NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
+        objNetID.AssignClientAuthority(connectionToClient);
+        obj.GetComponent<Chest>().SetCloseChest();
+        objNetID.RemoveClientAuthority(connectionToClient);
     }
 
 
@@ -239,32 +248,9 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    [Command]
-    public void CmdOpenChest(GameObject obj)
-    {
-        NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
-        objNetID.AssignClientAuthority(connectionToClient);
-        obj.GetComponent<Chest>().SetChestOpen();
-        objNetID.RemoveClientAuthority(connectionToClient);
-    }
-
-    public void CloseChest()
-    {
-        CmdCloseChest(ChestActiveWith.gameObject);
-    }
 
     [Command]
-    public void CmdCloseChest(GameObject obj)
-    {
-        NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
-        objNetID.AssignClientAuthority(connectionToClient);
-        obj.GetComponent<Chest>().CloseChest();
-        objNetID.RemoveClientAuthority(connectionToClient);
-    }
-
-
-    [Command]
-    public void CmdOpenCloseDoor(GameObject obj)
+     void CmdOpenCloseDoor(GameObject obj)
     {
         NetworkIdentity objNetID = obj.GetComponent<NetworkIdentity>();
         objNetID.AssignClientAuthority(connectionToClient);

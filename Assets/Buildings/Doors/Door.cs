@@ -23,7 +23,6 @@ public class Door : NetworkBehaviour {
     [ClientRpc]
     public void RpcOpenCloseDoor()
     {
-            Debug.Log("Opening Door");
             if (Closed)
             {
                 d_Animator.SetTrigger("Open");

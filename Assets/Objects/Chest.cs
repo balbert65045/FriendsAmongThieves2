@@ -7,9 +7,7 @@ using UnityEngine.Networking;
 public class Chest : NetworkBehaviour {
 
     public List<GameObject> itemsHeld;
-
     public SyncListInt ItemsIndexHeld = new SyncListInt();
-
     [SyncVar]
     public bool InUse = false;
 
@@ -20,12 +18,10 @@ public class Chest : NetworkBehaviour {
         {
             for (int i = 0; i < itemLUT.Items.Count; i++)
             {
-                Debug.Log(i);
                 if (!itemLUT.Items.Contains(item)) { Debug.LogError("Item in chest is not in lookup table"); }
                 else if (item == itemLUT.Items[i])
                 {
                     ItemsIndexHeld.Add(i);
-                    Debug.Log("Index Added");
                 }
             }
         }
@@ -36,9 +32,9 @@ public class Chest : NetworkBehaviour {
         ItemsIndexHeld.Callback = OnItemsUpdated;
     }
 
+    // used if something changes with the list
     private void OnItemsUpdated(SyncListInt.Operation op, int itemIndex)
     {
-        Debug.Log("Items Changed");
     }
 
 
@@ -61,7 +57,7 @@ public class Chest : NetworkBehaviour {
         InUse = true;
     }
 
-    public void CloseChest()
+    public void SetCloseChest()
     {
         InUse = false;
     }
