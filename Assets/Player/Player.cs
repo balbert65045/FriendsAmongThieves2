@@ -100,7 +100,8 @@ public class Player : NetworkBehaviour {
                 itemIndex = i;
             }
         }
-        CmdRemoveItemFromChest(itemIndex, ChestActiveWith.gameObject);
+        ChestActiveWith.RpcTakeItemOut(itemIndex);
+       // CmdRemoveItemFromChest(itemIndex, ChestActiveWith.gameObject);
     }
 
     [Command]
