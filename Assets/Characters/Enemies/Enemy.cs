@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Enemy : MonoBehaviour {
 
@@ -21,7 +20,7 @@ public class Enemy : MonoBehaviour {
     public float RemainingDistance;
     //public float RemainingDistance { get; private set;}
 
-    AICharacterControl aICharacterControl;
+    MyAICharacterControl aICharacterControl;
     Vector3 PositionMovingTo;
 
     Vector3 BeginingLookArea;
@@ -69,7 +68,7 @@ public class Enemy : MonoBehaviour {
     void Start () {
         //waypointSystem = FindObjectOfType<WaypointSystem>();
    
-        aICharacterControl = GetComponent<AICharacterControl>();
+        aICharacterControl = GetComponent<MyAICharacterControl>();
         aICharacterControl.SetTarget(waypointSystem.ActiveWaypoint);
         aICharacterControl.agent.speed = WalkSpeed;
         if (StationaryGuard)

@@ -14,7 +14,7 @@ public class PlayerBuilder : NetworkBehaviour {
     public override void OnStartLocalPlayer()
     {
         GameObject MyCAmeraRig = Instantiate(CameraRig);
-        MyCAmeraRig.GetComponent<FreeLookCam>().SetTarget(this.transform);
+        MyCAmeraRig.GetComponent<MyFreeLookCam>().SetTarget(this.transform);
 
         GameObject MySoundSphere = Instantiate(SoundSphere);
         MySoundSphere.GetComponent<SoundSphere>().SetTarget(this.transform);

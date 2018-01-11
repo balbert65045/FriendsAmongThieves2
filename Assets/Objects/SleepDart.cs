@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 public class SleepDart : MonoBehaviour {
 
@@ -20,9 +19,9 @@ public class SleepDart : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.GetComponent<ThirdPersonCharacter>())
+        if (collision.transform.GetComponent<MyThirdPersonCharacter>())
         {
-            collision.transform.GetComponent<ThirdPersonCharacter>().SetSleep(SleepTime);
+            collision.transform.GetComponent<MyThirdPersonCharacter>().SetSleep(SleepTime);
         }
 
         Destroy(gameObject);

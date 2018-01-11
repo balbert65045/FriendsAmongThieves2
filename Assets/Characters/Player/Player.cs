@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
 using UnityStandardAssets.Cameras;
 using System;
 
@@ -45,9 +44,9 @@ public class Player : NetworkBehaviour {
     itemSocket itemSocket;
     Inventory inventory;
 
-    ThirdPersonUserControl thirdPersonUserControl;
-    FreeLookCam freeLookCam;
-    ThirdPersonCharacter thirdPersonCharacter;
+    MyThirdPersonUserControl thirdPersonUserControl;
+    MyFreeLookCam freeLookCam;
+    MyThirdPersonCharacter thirdPersonCharacter;
      
     // Not needed at the moment
     public bool VaultAreaInside = false;
@@ -125,10 +124,10 @@ public class Player : NetworkBehaviour {
 
     // Use this for initialization
     void Start () {
-        freeLookCam = FindObjectOfType<FreeLookCam>();
+        freeLookCam = FindObjectOfType<MyFreeLookCam>();
         m_rigidbody = GetComponent<Rigidbody>();
-        thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
-        thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
+        thirdPersonUserControl = GetComponent<MyThirdPersonUserControl>();
+        thirdPersonCharacter = GetComponent<MyThirdPersonCharacter>();
         soundSphere = FindObjectOfType<SoundSphere>();
         SoundCollider = soundSphere.GetComponent<SphereCollider>();
         itemSocket = GetComponentInChildren<itemSocket>();
@@ -264,7 +263,7 @@ public class Player : NetworkBehaviour {
     [Command]
     private void CmdThrowRock()
     {
-        FreeLookCam rig = FindObjectOfType<FreeLookCam>();
+        MyFreeLookCam rig = FindObjectOfType<MyFreeLookCam>();
         Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
@@ -275,7 +274,7 @@ public class Player : NetworkBehaviour {
 
     private void ThrowDart()
     {
-        FreeLookCam rig = FindObjectOfType<FreeLookCam>();
+        MyFreeLookCam rig = FindObjectOfType<MyFreeLookCam>();
         Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
