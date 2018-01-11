@@ -268,8 +268,8 @@ public class Player : NetworkBehaviour {
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
-        NetworkServer.Spawn(rock1);
         rock1.GetComponent<Rigidbody>().AddForce(AimRay.direction * BallLaunchForce);
+        NetworkServer.Spawn(rock1);
     }
 
     private void ThrowDart()
