@@ -96,9 +96,10 @@ using UnityEngine.Networking;
 
 
 
-        void Start()
+     void Start()
         {
             m_Animator = GetComponent<Animator>();
+        if (!m_Animator) { Debug.Log("No Animator found"); }
             m_Rigidbody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             m_CapsuleHeight = m_Capsule.height;
@@ -119,6 +120,7 @@ using UnityEngine.Networking;
 
         public void Move(Vector3 move, bool crouch, bool jump)
         {
+            if (!m_Animator) { return; }
 
             if (Sleeping)
             {
@@ -310,7 +312,7 @@ using UnityEngine.Networking;
             {
                 m_GroundNormal = hitInfo.normal;
                 m_IsGrounded = true;
-                m_Animator.applyRootMotion = true;
+                m_Animator.applyRootMotion = true; 
             }
             else
             {

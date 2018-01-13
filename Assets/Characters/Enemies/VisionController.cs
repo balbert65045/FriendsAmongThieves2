@@ -33,6 +33,7 @@ public class VisionController : MonoBehaviour {
                 PatrolVision.gameObject.SetActive(true);
                 break;
             case Enemy.EnemyStates.Chase:
+                if (PlayerChasing == null) { Debug.LogError("No player to chase pass through"); }
                 ChaseVision.gameObject.SetActive(true);
                 PatrolVision.gameObject.SetActive(false);
                 break;

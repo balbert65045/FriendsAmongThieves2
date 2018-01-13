@@ -75,8 +75,9 @@ public class EnemySight : MonoBehaviour {
             }
             else
             {
-                visionController.StateChange(Enemy.EnemyStates.Chase);
+                Debug.Log(player);
                 visionController.SetPlayerChasing(player);
+                visionController.StateChange(Enemy.EnemyStates.Chase);
             }
         }
 
@@ -106,8 +107,10 @@ public class EnemySight : MonoBehaviour {
             }
             else
             {
-                visionController.StateChange(Enemy.EnemyStates.Chase);
+                Debug.Log(player);
                 visionController.SetPlayerChasing(player);
+                visionController.StateChange(Enemy.EnemyStates.Chase);
+
             }
         }
       }

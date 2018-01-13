@@ -15,6 +15,8 @@ public class EnemyEars : MonoBehaviour {
 
     Enemy enemy;
     GameObject PlayerHeardLocation;
+
+
 	void Start () {
         enemy = GetComponent<Enemy>();
         CurrentHeight = transform.position.y;
@@ -47,7 +49,7 @@ public class EnemyEars : MonoBehaviour {
                 Vector3 LocationtoMove = (DirectionHeard * InvestigateDistance) + transform.position;
                 if (PlayerHeardLocation != null) { Destroy(PlayerHeardLocation); }
                 PlayerHeardLocation = new GameObject("HeardLocation");
-                PlayerHeardLocation.transform.SetParent(transform.parent.transform);
+             //   PlayerHeardLocation.transform.SetParent(transform.parent.transform);
                 PlayerHeardLocation.transform.position = new Vector3(LocationtoMove.x, CurrentHeight, LocationtoMove.z);
                 CurrentHeardPosition = PlayerHeardLocation.transform.position;
 
@@ -60,7 +62,7 @@ public class EnemyEars : MonoBehaviour {
                 Vector3 LocationtoMove = (DirectionHeard * InvestigateDistance) + transform.position;
                 if (PlayerHeardLocation != null) { Destroy(PlayerHeardLocation); }
                 PlayerHeardLocation = new GameObject("HeardLocation");
-                PlayerHeardLocation.transform.SetParent(transform.parent.transform);
+                //PlayerHeardLocation.transform.SetParent(transform.parent.transform);
                 PlayerHeardLocation.transform.position = new Vector3(LocationtoMove.x, CurrentHeight, LocationtoMove.z);
                 CurrentHeardPosition = PlayerHeardLocation.transform.position;
 
