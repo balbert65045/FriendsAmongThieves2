@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
-    [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Animator))]
-    public class MyThirdPersonCharacter : MonoBehaviour
+    public class MyThirdPersonCharacter : NetworkBehaviour
     {
         [SerializeField]
         float m_MovingTurnSpeed = 360;
@@ -48,7 +49,9 @@ using UnityEngine;
         float SleepStartTime;
         float SleepTime = 10f;
 
-        public void SetSleep(float TimeSleep)
+
+        [ClientRpc]
+        public void RpcSetSleep(float TimeSleep)
         {
             SleepStartTime = Time.time;
             SleepTime = TimeSleep;
