@@ -53,6 +53,7 @@ using UnityEngine;
             SleepStartTime = Time.time;
             SleepTime = TimeSleep;
             Sleeping = true;
+            Debug.Log("Sleeping");
             if (GetComponent<Enemy>())
             {
                 GetComponent<Enemy>().StatusChange(Enemy.EnemyStates.Sleeping, this.transform, null);

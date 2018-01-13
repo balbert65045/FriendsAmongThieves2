@@ -285,9 +285,17 @@ public class Player : NetworkBehaviour {
         Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-        GameObject MySleepDart = Instantiate(SleepDart, itemSocket.transform.position, transform.rotation);
-        MySleepDart.GetComponent<Rigidbody>().AddForce(AimRay.direction * DartLaunchForce);
+        CmdSpawnDart(AimRay.direction);
     }
+
+    [Command]
+    void CmdSpawnDart(Vector3 DartkDirection)
+    {
+        GameObject dart1 = Instantiate(SleepDart, itemSocket.transform.position, Quaternion.identity);
+        dart1.GetComponent<Rigidbody>().AddForce(DartkDirection * BallLaunchForce);
+        NetworkServer.Spawn(dart1);
+    }
+
 
     // Deplete the stamina when moving and recharge when not moving
     private void UpdateStamina()
