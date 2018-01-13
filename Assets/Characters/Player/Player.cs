@@ -266,15 +266,16 @@ public class Player : NetworkBehaviour {
         Ray AimRay = rig.GetComponentInChildren<Camera>().ScreenPointToRay(FindObjectOfType<AimReticle>().transform.position);
         Quaternion rotation = Quaternion.LookRotation(AimRay.direction);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-        GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
-        rock1.GetComponent<Rigidbody>().AddForce(AimRay.direction * BallLaunchForce);
-        CmdSpawnRock(rock1);
+        
+        CmdSpawnRock(AimRay.direction);
     }
 
     [Command]
-    void CmdSpawnRock(GameObject rock)
+    void CmdSpawnRock(Vector3 RockDirection)
     {
-        NetworkServer.Spawn(rock);
+        GameObject rock1 = Instantiate(rock, itemSocket.transform.position, Quaternion.identity);
+        rock1.GetComponent<Rigidbody>().AddForce(RockDirection * BallLaunchForce);
+        NetworkServer.Spawn(rock1);
     }
 
 
