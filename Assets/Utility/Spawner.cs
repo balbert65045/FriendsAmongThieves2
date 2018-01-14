@@ -11,6 +11,9 @@ public class Spawner : NetworkBehaviour {
 
     public override void OnStartServer()
     {
+
+        if (!isServer) { return; }
+
         Debug.Log("ServerStart");
 
         GameObject enemy = Instantiate(EnemyObj, EnemyLocation.position, EnemyLocation.rotation);
