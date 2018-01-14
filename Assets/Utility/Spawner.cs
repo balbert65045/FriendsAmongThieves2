@@ -6,14 +6,14 @@ using UnityEngine.Networking;
 public class Spawner : NetworkBehaviour {
 
     // Use this for initialization
+    public Transform EnemyLocation;
+
     public override void OnStartServer()
     {
         Debug.Log("ServerStart");
         myNetworkManager MynetworkManager = FindObjectOfType<myNetworkManager>();
-        PrefabLocations PrefabLocations = FindObjectOfType<PrefabLocations>();
+      //  PrefabLocations PrefabLocations = FindObjectOfType<PrefabLocations>();
 
-        int doorIndex = 0;
-        int chestIndex = 0;
         foreach (GameObject obj in MynetworkManager.spawnPrefabs)
         {
             //if (obj.GetComponent<Door>())
@@ -29,6 +29,13 @@ public class Spawner : NetworkBehaviour {
             //   // chest.GetComponent<Chest>().SetUpChest();
             //    chestIndex++;
             //}
+            if (obj.GetComponent<Enemy>())
+            {
+                GameObject enemy = Instantiate(obj, EnemyLocation.position, EnemyLocation.rotation);
+                NetworkServer.Spawn(enemy);
+            }
+
+
         }
 
        
